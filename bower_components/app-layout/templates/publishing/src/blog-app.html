@@ -87,7 +87,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-center-center);
         box-sizing: border-box;
       }
-      
+
       .nav-title-toolbar {
         color: #fff;
         width: 100vw;
@@ -102,7 +102,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 60px;
         font-weight: 800;
       }
-      
+
       .category-page {
         min-height: 100vh;
       }
@@ -168,16 +168,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <!-- nav panel -->
       <app-drawer id="drawer">
+        #######a
+
         <app-header-layout has-scrolling-region>
 
           <app-header fixed>
 
             <!-- top toolbar -->
-            <app-toolbar></app-toolbar>
+            <app-toolbar>bbbbbbb</app-toolbar>
 
             <!-- bottom toolbar -->
             <app-toolbar class="title-toolbar nav-title-toolbar">
-              <div class="title">ZUPERK&Uuml;LBLOG</div>
+              <div class="title">ZUPERK&Uuml;LBLOGa</div>
             </app-toolbar>
 
           </app-header>
@@ -198,11 +200,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <!-- main panel -->
       <app-header-layout>
+        #######a
 
         <app-header fixed effects="waterfall" class="main-header">
 
           <!-- top toolbar -->
           <app-toolbar>
+            a
             <!-- menu button -->
             <paper-icon-button
                 drawer-toggle
@@ -219,7 +223,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <!-- bottom toolbar -->
           <app-toolbar class="title-toolbar main-title-toolbar">
-            <div class="title">ZUPERK&Uuml;LBLOG</div>
+            <div class="title">ZUPERK&Uuml;LBLOGa</div>
           </app-toolbar>
 
         </app-header>
@@ -234,7 +238,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <!-- category page (lazy-loaded) -->
               <template is="dom-if" if="[[_equal(category, [[categoryData.category.name]])]]">
                 <section class="category-page" name="[[category.name]]">
-  
+
                   <!-- 2-columns grid -->
                   <two-columns-grid column-width="396" gutter="4">
                     <template is="dom-repeat" items="[[category.items]]" as="article">
@@ -244,7 +248,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           article="[[article]]"></a>
                     </template>
                   </two-columns-grid>
-                  
+
                 </section>
               </template>
             </template>

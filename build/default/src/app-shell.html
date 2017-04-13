@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="my-icons.html">
 
-</head><body><dom-module id="my-app">
+</head><body><dom-module id="app-shell">
   <template>
     <style>
       :host {
@@ -59,24 +59,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
 
-    <app-drawer-layout fullbleed="">
+    <!-- <app-drawer-layout fullbleed> -->
       <!-- Drawer content -->
-      <app-drawer id="drawer">
+      <app-drawer id="drawer" opened="{{drawerOpened}}" swipeopen="">
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="/view1">View One</a>
+          <a name="view1" href="/view1">View Oneaaa</a>
           <a name="view2" href="/view2">View Two</a>
           <a name="view3" href="/view3">View Three</a>
         </iron-selector>
       </app-drawer>
 
       <!-- Main content -->
-      <app-header-layout has-scrolling-region="">
+      <!-- <app-header-layout has-scrolling-region> -->
 
         <app-header condenses="" reveals="" effects="waterfall">
           <app-toolbar>
-            <paper-icon-button icon="my-icons:menu" drawer-toggle=""></paper-icon-button>
-            <div main-title="">My App P1</div>
+            <paper-icon-button icon="my-icons:menu" on-click="_toggleDrawer"></paper-icon-button>
+            <div main-title="">My App P1a</div>
           </app-toolbar>
         </app-header>
 
@@ -86,13 +86,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <my-view3 name="view3"></my-view3>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
-      </app-header-layout>
-    </app-drawer-layout>
+      <!-- </app-header-layout> -->
+    <!-- </app-drawer-layout> -->
   </template>
 
   <script>
     Polymer({
-      is: 'my-app',
+      is: 'app-shell',
 
       properties: {
         page: {
@@ -118,6 +118,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // Load page import on demand. Show 404 page if fails
         var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
         this.importHref(resolvedPageUrl, null, this._showPage404, true);
+      },
+
+      _toggleDrawer: function() {
+        this.drawerOpened = !this.drawerOpened;
       },
 
       _showPage404: function() {
