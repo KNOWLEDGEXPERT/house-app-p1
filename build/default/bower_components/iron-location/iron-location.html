@@ -53,7 +53,6 @@ milliseconds.
 
     Polymer({
       is: 'iron-location',
-
       properties: {
         /**
          * The pathname component of the URL.
@@ -65,7 +64,6 @@ milliseconds.
             return window.decodeURIComponent(window.location.pathname);
           }
         },
-
         /**
          * The query string portion of the URL.
          */
@@ -76,7 +74,6 @@ milliseconds.
             return window.location.search.slice(1);
           }
         },
-
         /**
          * The hash component of the URL.
          */
@@ -87,7 +84,6 @@ milliseconds.
             return window.decodeURIComponent(window.location.hash.slice(1));
           }
         },
-
         /**
          * If the user was on a URL for less than `dwellTime` milliseconds, it
          * won't be added to the browser's history, but instead will be replaced
@@ -137,15 +133,12 @@ milliseconds.
           value: false
         }
       },
-
       hostAttributes: {
         hidden: true
       },
-
       observers: [
         '_updateUrl(path, query, hash)'
       ],
-
       attached: function() {
         this.listen(window, 'hashchange', '_hashChanged');
         this.listen(window, 'location-changed', '_urlChanged');
@@ -154,11 +147,10 @@ milliseconds.
         // Give a 200ms grace period to make initial redirects without any
         // additions to the user's history.
         this._lastChangedAt = window.performance.now() - (this.dwellTime - 200);
-        this._initialized = true;
 
+        this._initialized = true;
         this._urlChanged();
       },
-
       detached: function() {
         this.unlisten(window, 'hashchange', '_hashChanged');
         this.unlisten(window, 'location-changed', '_urlChanged');
@@ -166,11 +158,9 @@ milliseconds.
         this.unlisten(/** @type {!HTMLBodyElement} */(document.body), 'click', '_globalOnClick');
         this._initialized = false;
       },
-
       _hashChanged: function() {
         this.hash = window.decodeURIComponent(window.location.hash.substring(1));
       },
-
       _urlChanged: function() {
         // We want to extract all info out of the updated URL before we
         // try to write anything back into it.
@@ -184,7 +174,6 @@ milliseconds.
         this._dontUpdateUrl = false;
         this._updateUrl();
       },
-
       _getUrl: function() {
         var partiallyEncodedPath = window.encodeURI(
             this.path).replace(/\#/g, '%23').replace(/\?/g, '%3F');
@@ -199,12 +188,10 @@ milliseconds.
         return (
             partiallyEncodedPath + partiallyEncodedQuery + partiallyEncodedHash);
       },
-
       _updateUrl: function() {
         if (this._dontUpdateUrl || !this._initialized) {
           return;
         }
-
         if (this.path === window.decodeURIComponent(window.location.pathname) &&
             this.query === window.location.search.substring(1) &&
             this.hash === window.decodeURIComponent(
@@ -212,24 +199,21 @@ milliseconds.
           // Nothing to do, the current URL is a representation of our properties.
           return;
         }
-
         var newUrl = this._getUrl();
         // Need to use a full URL in case the containing page has a base URI.
         var fullNewUrl = new URL(
             newUrl, window.location.protocol + '//' + window.location.host).href;
         var now = window.performance.now();
-        var shouldReplace = this._lastChangedAt + this.dwellTime > now;
+        var shouldReplace =
+            this._lastChangedAt + this.dwellTime > now;
         this._lastChangedAt = now;
-
         if (shouldReplace) {
           window.history.replaceState({}, '', fullNewUrl);
         } else {
           window.history.pushState({}, '', fullNewUrl);
         }
-
         this.fire('location-changed', {}, {node: window});
       },
-
       /**
        * A necessary evil so that links work as expected. Does its best to
        * bail out early if possible.
@@ -243,25 +227,19 @@ milliseconds.
         if (event.defaultPrevented) {
           return;
         }
-
         var href = this._getSameOriginLinkHref(event);
-
         if (!href) {
           return;
         }
-
         event.preventDefault();
-
         // If the navigation is to the current page we shouldn't add a history
         // entry or fire a change event.
         if (href === window.location.href) {
           return;
         }
-
         window.history.pushState({}, '', href);
         this.fire('location-changed', {}, {node: window});
       },
-
       /**
        * Returns the absolute URL of the link (if any) that this click event
        * is clicking on, if we can and should override the resulting full
@@ -275,19 +253,15 @@ milliseconds.
         if (event.button !== 0) {
           return null;
         }
-
         // We don't want modified clicks, where the intent is to open the page
         // in a new tab.
         if (event.metaKey || event.ctrlKey) {
           return null;
         }
-
         var eventPath = Polymer.dom(event).path;
         var anchor = null;
-
         for (var i = 0; i < eventPath.length; i++) {
           var element = eventPath[i];
-
           if (element.tagName === 'A' && element.href) {
             anchor = element;
             break;
@@ -303,10 +277,9 @@ milliseconds.
         if (anchor.target === '_blank') {
           return null;
         }
-
         // If the link is for an existing parent frame, don't intercept.
         if ((anchor.target === '_top' ||
-            anchor.target === '_parent') &&
+             anchor.target === '_parent') &&
             window.top !== window) {
           return null;
         }
@@ -316,7 +289,6 @@ milliseconds.
         // It only makes sense for us to intercept same-origin navigations.
         // pushState/replaceState don't work with cross-origin links.
         var url;
-
         if (document.baseURI != null) {
           url = new URL(href, /** @type {string} */(document.baseURI));
         } else {
@@ -339,7 +311,6 @@ milliseconds.
         if (url.origin !== origin) {
           return null;
         }
-
         var normalizedHref = url.pathname + url.search + url.hash;
 
         // If we've been configured not to handle this url... don't handle it!
@@ -347,13 +318,11 @@ milliseconds.
             !this._urlSpaceRegExp.test(normalizedHref)) {
           return null;
         }
-
         // Need to use a full URL in case the containing page has a base URI.
         var fullNormalizedHref = new URL(
             normalizedHref, window.location.href).href;
         return fullNormalizedHref;
       },
-
       _makeRegExp: function(urlSpaceRegex) {
         return RegExp(urlSpaceRegex);
       }

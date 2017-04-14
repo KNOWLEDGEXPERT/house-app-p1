@@ -1,4 +1,4 @@
-# App Layout [![Build Status](https://travis-ci.org/PolymerElements/app-layout.svg?branch=2.0-preview)](https://travis-ci.org/PolymerElements/app-layout) [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://beta.webcomponents.org/element/PolymerElements/app-layout)
+# App Layout [![Build Status](https://travis-ci.org/PolymerElements/app-layout.svg?branch=master)](https://travis-ci.org/PolymerElements/app-layout) [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://beta.webcomponents.org/element/PolymerElements/app-layout)
 
 A collection of elements, along with guidelines and templates that can be used to structure your app’s layout.
 
@@ -41,7 +41,7 @@ A collection of elements, along with guidelines and templates that can be used t
         --paper-progress-container-color: transparent;
       }
       app-header {
-        @apply --layout-fixed-top;
+        @apply(--layout-fixed-top);
         color: #fff;
         --app-header-background-rear-layer: {
           background-color: #ef6c00;
@@ -105,6 +105,8 @@ $ bower install PolymerElements/app-layout --save
 
 - [app-header-layout](/app-header-layout) - A wrapper element that positions an app-header and other content.
 
+- [app-scrollpos-control](/app-scrollpos-control) - A manager for saving and restoring the scroll position when multiple pages are sharing the same document scroller.
+
 - [app-toolbar](/app-toolbar) - A horizontal toolbar containing items that can be used for label, navigation, search and actions.
 
 ### Templates
@@ -113,15 +115,6 @@ The templates are a means to define, illustrate and share best practices in App 
 
 - **Getting started**
 ([Demo](https://polymerelements.github.io/app-layout/templates/getting-started) - [Source](/templates/getting-started))
-
-
-```html
-<link rel="import" href="/bower_components/app-layout/app-layout.html">
-```
-
-### Changes in App Layout 2.0
-
-- `app-scrollpos-control` has been removed from App Layout in favor of using multiple scrolling regions to preserve the scroll position. In terms of UX, [`document.rootScroller`](https://github.com/bokand/NonDocumentRootScroller) is a new web platform API that will allow non-document scroll to hide the address bar on mobile.
 
 - **Landing page**
 ([Demo](https://polymerelements.github.io/app-layout/templates/landing-page) - [Source](/templates/landing-page))

@@ -96,11 +96,7 @@ Custom property                  | Description                            | Defa
 
         background-color: #FFF;
 
-        @apply --app-drawer-content-container;
-      }
-
-      :host([persistent]) > #contentContainer {
-        width: 100%;
+        @apply(--app-drawer-content-container);
       }
 
       :host([position=right]) > #contentContainer {
@@ -164,10 +160,10 @@ Custom property                  | Description                            | Defa
       }
     </style>
 
-    <div id="scrim" on-click="close"></div>
+    <div id="scrim" on-tap="close"></div>
 
     <div id="contentContainer">
-      <slot></slot>
+      <content></content>
     </div>
   </template>
 
@@ -282,7 +278,7 @@ Custom property                  | Description                            | Defa
           this.setScrollDirection('y');
         });
 
-        this.fire('app-reset-layout');
+        this.fire('app-drawer-attached');
       },
 
       detached: function() {
@@ -317,6 +313,16 @@ Custom property                  | Description                            | Defa
        */
       getWidth: function() {
         return this.$.contentContainer.offsetWidth;
+      },
+
+      /**
+       * Resets the layout. The event fired is used by app-drawer-layout to position the
+       * content.
+       *
+       * @method resetLayout
+       */
+      resetLayout: function() {
+        this.fire('app-drawer-reset-layout');
       },
 
       _isRTL: function() {
@@ -567,15 +573,6 @@ Custom property                  | Description                            | Defa
         }
       },
 
-      /**
-       * Resets the layout.
-       *
-       * @method resetLayout
-       */
-      resetLayout: function() {
-        this.fire('app-reset-layout');
-      },
-
       _setKeyboardFocusTrap: function() {
         if (this.noFocusTrap) {
           return;
@@ -661,9 +658,15 @@ Custom property                  | Description                            | Defa
       }
 
       /**
+       * Fired when the layout of app-drawer is attached.
+       *
+       * @event app-drawer-attached
+       */
+
+      /**
        * Fired when the layout of app-drawer has changed.
        *
-       * @event app-reset-layout
+       * @event app-drawer-reset-layout
        */
 
       /**

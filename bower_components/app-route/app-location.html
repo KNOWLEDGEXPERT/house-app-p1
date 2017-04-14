@@ -164,13 +164,6 @@ firing a `location-changed` event on `window`. i.e.
           path: {
             type: String,
             observer: '__onPathChanged'
-          },
-
-          /**
-           * Whether or not the ready function has been called.
-           */
-          _isReady: {
-            type: Boolean
           }
         },
 
@@ -180,16 +173,12 @@ firing a `location-changed` event on `window`. i.e.
           '__computeRoutePath(useHashAsPath, __hash, __path)'
         ],
 
-        ready: function() {
-          this._isReady = true;
-        },
-
         __computeRoutePath: function() {
           this.path = this.useHashAsPath ? this.__hash : this.__path;
         },
 
         __onPathChanged: function() {
-          if (!this._isReady) {
+          if (!this._readied) {
             return;
           }
 
