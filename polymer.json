@@ -1,6 +1,6 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/app-shell.html",
+  "shell": "src/my-app.html",
   "fragments": [
     "src/my-view1.html",
     "src/my-view2.html",
@@ -14,6 +14,9 @@
   ],
   "extraDependencies": [
     "manifest.json",
-    "bower_components/webcomponentsjs/webcomponents-lite.min.js"
-  ]
+    "bower_components/webcomponentsjs/*.js"
+  ],
+  "lint": {
+    "rules": ["polymer-2"]
+  }
 }

@@ -1,6 +1,6 @@
 {
-  "name": "My App P1",
-  "short_name": "My App P1",
+  "name": "My App",
+  "short_name": "My App",
   "start_url": "/?homescreen=1",
   "display": "standalone",
   "theme_color": "#3f51b5",
