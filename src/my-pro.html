@@ -7,8 +7,14 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
-
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="my-pro">
@@ -19,14 +25,105 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         padding: 10px;
       }
+    }
+    form > paper-button {
+     width: 45%;
+     margin-top: 20px;
+    }
+    form > paper-button:not([disabled]) {
+     background: var(--paper-light-blue-500);
+     color: white;
+    }
+    button {
+      margin-top: 20px;
+    }
+    paper-icon-button {
+      color: #2196F3;
+      --paper-icon-button-ink-color: white;
+    }
+    [main-title] {
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
+      @apply(--layout-center-justified);
+      padding: 8px 24px;
+      flex-basis: 100%;
+      background-color:#fdfdfd
+    }
+    .form-content{
+      @apply(--layout-flex);
+      border-radius: 10px;
+      /*margin-top: -100px*/
+      /*padding-top:  -32px;*/
+      padding-left: 1rem;
+      padding-right: 1rem;
+      padding-bottom: 1rem;
+      /*background-color: orange;*/
+    }
+    .form-head{
+      color: #fff;
+      text-align: center;
+      margin-top: -50px;
+      margin-bottom: 1rem;
+      padding: 1px;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      -ms-border-radius: 2px;
+      -o-border-radius: 2px;
+      border-radius: 2px;
+      box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+      background:  -webkit-linear-gradient( right, transparent 1%, transparent 10%, rgba(72,133,237,0.8) 100%);
+      background-color:#fdfdfd;
+    }
+    .form-block{
+      position: relative;
+      @apply(--layout-flex);
+      padding: 1rem;
+      margin-top: 2rem;
+      /*margin-left: 2rem;
+      margin-right: 2rem;*/
+      box-shadow: 0 0 10px rgba(0,0,0,0.13);
+      /*background-color: yellow;*/
+    }
+    .form-card{
+      @apply(--layout-flex);
+      position: relative;
+      max-width: 500px;
+      /*background-color: blue;*/
+    }
     </style>
 
     <div class="card">
-      <div class="circle">2</div>
-      <h1>Landpage Pro</h1>
-      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.</p>
-      <p>Id nam odio natum malorum, tibique copiosae expetenda mel ea.Detracto suavitate repudiandae no eum. Id adhuc minim soluta nam.Id nam odio natum malorum, tibique copiosae expetenda mel ea.</p>
-    </div>
+      <div main-title>
+        <div class="form-title">
+          <section class="display3">
+          <h>Join Now</h>
+          </section>
+          <section class="subhead">
+          <h>If you are professional, then you want more customers.</h><br>
+          <h>We can help you.</h>
+          </section>
+      </div>
+        <div class="form-card">
+          <div class="form-block">
+            <div class="form-head">
+              <h3>Form Title</h3>
+            </div>
+            <div class="form-content">
+
+              <form is="iron-form" id="redirectDemo">
+                <paper-input name="name" label="Name" required></paper-input>
+                <paper-input name="zip" label="Zip Code" required></paper-input>
+                <paper-input name="phone" label="Phone Nuber" required></paper-input>
+                <paper-input name="email" label="Email Address" required></paper-input>
+                <paper-button raised onclick="_nativeSubmit(event)">Submit</paper-button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      </div>
   </template>
 
   <script>
