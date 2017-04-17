@@ -23,8 +23,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-styles/typography.html">
 <link rel="import" href="../bower_components/paper-styles/color.html">
 <link rel="import" href="my-icons.html">
+<!-- App firebase connection -->
+<link rel="import" href="ha-auth/ha-auth.html">
 
-<dom-module id="my-app">
+
+<dom-module id="app-shell">
   <template>
     <style>
       :host {
@@ -101,6 +104,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         pattern="/:page"
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
+        
+    <!-- firebase connection -->
+    <app-auth id="auth"></app-auth>
 
     <app-drawer-layout fullbleed force-narrow>
       <!-- Drawer content -->
@@ -142,7 +148,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     Polymer({
-      is: 'my-app',
+      is: 'app-shell',
 
       properties: {
         page: {
