@@ -4,7 +4,8 @@
   "fragments": [
     "src/my-home.html",
     "src/my-pro.html",
-    "src/my-view3.html",
+    "src/my-login.html",
+    "src/my-register.html",
     "src/my-view404.html"
   ],
   "sources": [

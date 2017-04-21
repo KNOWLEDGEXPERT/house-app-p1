@@ -4,12 +4,35 @@
 
 <dom-module id="ha-auth-firebase">
   <template>
+    <firebase-app id="firebaseApp"
+                  name="house-app"
+                  auth-domain="house-app-dev-p1.firebaseapp.com"
+                  database-url="https://house-app-dev-p1.firebaseio.com/"
+                  api-key="AIzaSyC4-KCt4e0YMhDjkE4iB-FdbRfZspl1ELs">
+    </firebase-app>
+
+    <firebase-auth id="firebaseAuth"
+                   app-name="house-app"
+                   user="{{user}}"
+                   signed-in="{{signedIn}}"
+                   on-error="showError">
+    </firebase-auth>
 
   </template>
 
   <script>
     Polymer({
       is: 'ha-auth-firebase',
+      signInAnonymously: function (emailInput) {
+        console.log(emailInput);
+        this.$.firebaseAuth.signInAnonymously();
+        this.$.firebaseAuth.user.updateProfile({
+          // email: emailInput,
+          photoURL: "https://example.com/jane-q-user/profile.jpg"
+        });
+        console.log(this.$.firebaseAuth.user);
+
+      }
     });
   </script>
 </dom-module>

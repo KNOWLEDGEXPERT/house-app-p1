@@ -186,6 +186,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-center-center);
 
       }
+      paper-button.custom {
+          --paper-button-ink-color: var(--paper-pink-a200);
+          /* These could also be individually defined for each of the
+            specific css classes, but we'll just do it once as an example */
+          --paper-button-flat-keyboard-focus: {
+            background-color: var(--paper-pink-a200);
+            color: white !important;
+          };
+          --paper-button-raised-keyboard-focus: {
+            background-color: var(--paper-pink-a200) !important;
+            color: white !important;
+          };
+        }
+        paper-button.custom:hover {
+          background-color: var(--paper-indigo-100);
+        }
+        paper-button.indigo {
+          background-color: var(--paper-indigo-500);
+          color: white;
+          --paper-button-raised-keyboard-focus: {
+            background-color: var(--paper-pink-a200) !important;
+            color: white !important;
+          };
+        }
+        a:link {
+            text-decoration: none;
+        }
+
+        a:visited {
+            text-decoration: none;
+        }
+
+        a:hover {
+          text-decoration: none;
+        }
+
+        a:active {
+          text-decoration: none;
+        }
     @media(max-width: 600px) {
       [main-title] {
       @apply(--layout-vertical-reverse);
@@ -288,21 +327,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   }
     </style>
-    <app-route
-        route="{{route}}"
-        pattern="/:page"
-        data="{{routeData}}">
-    </app-route>
 
     <div flex>
       <div class="green">
-        <iron-selector selected="[[page]]" attr-for-selected="name" role="navigation">
-          <a name="home" href="/home"><paper-button>Are you looking for Pro?</paper-icon-button></a>
-        </iron-selector>
+          <a name="home" href="/home"><paper-button raised class="custom indigo">Are you looking for Pro?</paper-icon-button></a>
       </div>
     </div>
 
-    <div>
+    <div class="card">
       <div main-title>
         <div class="form-title">
           <p class="display3">Join Now</p>
@@ -352,8 +384,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <paper-input name="name" label="Name" required></paper-input>
                 <paper-input name="zip" label="Zip Code" required></paper-input>
                 <paper-input name="phone" label="Phone Nuber" required></paper-input>
-                <paper-input name="email" label="Email Address" required></paper-input>
-                <paper-button raised onclick="_nativeSubmit(event)">Submit</paper-button>
+                <paper-input id="emailInput" name="email" label="Email Address" required></paper-input>
+                <paper-button raised on-tap="login">Submit</paper-button>
               </form>
             </div>
           </div>
@@ -393,6 +425,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     Polymer({
       is: 'my-pro',
+      properties: {
+        user: {
+          type: Object
+        }
+      },
+      login: function() {
+        this.fire('app-auth-on-button-tap',
+                  {
+                    button: 'proSubmit',
+                    email: this.$.emailInput.value
+                  }
+        );
+      }
     });
   </script>
 </dom-module>

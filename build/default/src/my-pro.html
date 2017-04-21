@@ -19,11 +19,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </head><body><dom-module id="my-pro">
   <template>
     <style include="shared-styles">
-      :host {
+    :host {
         display: block;
-
-        padding: 10px;
-      }
+        /*padding: 10px;*/
     }
     form > paper-button {
      width: 45%;
@@ -46,7 +44,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       @apply(--layout-center-justified);
       padding: 8px 24px;
       flex-basis: 100%;
-      background-color:#fdfdfd
+      background-color:#fdfdfd;
+    }
+    [how] {
+      @apply(--layout-horizontal);
+      /*@apply(--layout-center);*/
+      @apply(--layout-center-justified);
+      @apply(--layout-flex);
+      /*padding: 8px 60px;*/
+      /*flex-basis: 100%;*/
+      background-color:#fdfdfd;
     }
     .form-content{
       @apply(--layout-flex);
@@ -60,9 +67,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     .form-head{
       color: #fff;
+      @apply(--paper-font-common-base);
+      width: 95%;
       text-align: center;
       margin-top: -50px;
-      margin-bottom: 1rem;
+      margin-bottom: 1px;
       padding: 1px;
       -webkit-border-radius: 2px;
       -moz-border-radius: 2px;
@@ -81,41 +90,292 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /*margin-left: 2rem;
       margin-right: 2rem;*/
       box-shadow: 0 0 10px rgba(0,0,0,0.13);
+      min-width: 300px;
       /*background-color: yellow;*/
     }
     .form-card{
       @apply(--layout-flex);
+      @apply(--layout-vertical-reverse);
       position: relative;
-      max-width: 500px;
-      /*background-color: blue;*/
+      max-width: 390px;
     }
+      /*background-color: blue;*/
+    .logo-title{
+        /*@apply(--layout-flex);*/
+        /*flex-basis: 5%;*/
+        box-sizing: border-box;
+        color: #000;
+        /*background-color: red;*/
+      }
+      .logo{
+        @apply(--layout-flex);
+        align-content: center;
+        /*flex-basis: 5%;*/
+        box-sizing: border-box;
+        color: #000;
+        background-color: red;
+      }
+      .display3{
+        @apply(--paper-font-display3);
+        opacity: var(--dark-primary-opacity);
+        /*@apply(--layout-flex);*/
+      }
+      .display2{
+        @apply(--paper-font-display2);
+        opacity: var(--dark-primary-opacity);
+        text-align: center;
+      }
+      .subhead{
+        @apply(--paper-font-subhead);
+        opacity: var(--dark-primary-opacity);
+        flex-basis: auto;
+        font-size: 18px;
+        /*font-weight: 400;*/
+        /*line-height: 24px;*/
+        /*padding-top: 12px;*/
+      }
+      .subhead2{
+        @apply(--paper-font-subhead);
+        opacity: var(--dark-secondary-opacity);
+        flex-basis: auto;
+        padding-right: 16px;
+      }
+      .descript{
+        @apply(--paper-font-common-base);
+        opacity: var(--dark-secondary-opacity);
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 20px;
+      }
+      [work] {
+        @apply(--layout-horizontal);
+        /*@apply(--layout-center);*/
+        /*@apply(--layout-center-justified);*/
+        padding: 8px 8px;
+        /*background-color:yellow;*/
+      }
+      [how] {
+        @apply(--layout-vertical);
+        @apply(--layout-flex);
+        /*@apply(--layout-center);*/
+        @apply(--layout-center-justified);
+        /*padding: 50px 1px;*/
+        /*flex-basis: 100%;*/
+        /*background-color:yellow;*/
+      }
+      .flex-wrap {
+        @apply(--layout-horizontal);
+        @apply(--layout-flex-none);
+        /*@apply(--layout-wrap);*/
+        /*background-color: yellow;*/
+      }
+      .flex-wrap2 {
+        @apply(--layout-vertical);
+        @apply(--layout-center-aligned);
+        width: 100%;
+        /*background-color: blue;*/
+      }
+      .flex-wrap3 {
+        @apply(--layout-vertical);
+        @apply(--layout-wrap);
+        width: 100%;
+        background-color: #F1f1f1;
+      }
+      .container{
+        @apply(--layout-center-center);
+
+      }
+      paper-button.custom {
+          --paper-button-ink-color: var(--paper-pink-a200);
+          /* These could also be individually defined for each of the
+            specific css classes, but we'll just do it once as an example */
+          --paper-button-flat-keyboard-focus: {
+            background-color: var(--paper-pink-a200);
+            color: white !important;
+          };
+          --paper-button-raised-keyboard-focus: {
+            background-color: var(--paper-pink-a200) !important;
+            color: white !important;
+          };
+        }
+        paper-button.custom:hover {
+          background-color: var(--paper-indigo-100);
+        }
+        paper-button.indigo {
+          background-color: var(--paper-indigo-500);
+          color: white;
+          --paper-button-raised-keyboard-focus: {
+            background-color: var(--paper-pink-a200) !important;
+            color: white !important;
+          };
+        }
+        a:link {
+            text-decoration: none;
+        }
+
+        a:visited {
+            text-decoration: none;
+        }
+
+        a:hover {
+          text-decoration: none;
+        }
+
+        a:active {
+          text-decoration: none;
+        }
+    @media(max-width: 600px) {
+      [main-title] {
+      @apply(--layout-vertical-reverse);
+      /*flex-basis: 100%;*/
+      background-color:#fdfdfd;
+      position: relative;
+      }
+      .flex-wrap {
+        @apply(--layout-vertical);
+        @apply(--layout-wrap);
+        width: 100%;
+        background-color: white;
+      }
+      .flex-wrap2 {
+        @apply(--layout-vertical);
+        @apply(--layout-wrap);
+        width: 100%;
+        background-color: white;
+      }
+      .flex-wrap3 {
+        @apply(--layout-vertical);
+        @apply(--layout-wrap);
+        width: 100%;
+        background-color: #F1f1f1;
+      }
+      [how] {
+        @apply(--layout-vertical);
+        @apply(--layout-flex);
+        /*@apply(--layout-center);*/
+        @apply(--layout-center-justified);
+        /*padding: 50px 1px;*/
+        /*flex-basis: 100%;*/
+        /*background-color:yellow;*/
+      }
+      [work] {
+        @apply(--layout-horizontal);
+        @apply(--layout-flex);
+        /*@apply(--layout-center);*/
+        /*@apply(--layout-vertical);*/
+        /*padding: 8px 8px;*/
+        /*background-color:yellow;*/
+      }
+      .form-block{
+        position: relative;
+        @apply(--layout-vertical-justified);
+        @apply(--layout-center);
+        /*flex-basis: %;*/
+        /*padding: 1rem;*/
+        /*margin-top: 2rem;*/
+        /*margin-bottom: 2rem;*/
+        /*margin-left: 2rem;
+        margin-right: 2rem;*/
+        box-shadow: 0 0 10px rgba(0,0,0,0.13);
+        min-width: 300px;
+        padding: 0;
+        flex-basis: 100%;
+    }
+    .card{
+      @apply(--layout-flex);
+      @apply(--layout-vertical-reverse);
+      position: relative;
+      max-width: 390px;
+      /*background-color: blue;*/
+      width: 100%;
+      min-width: 220px;
+    }
+    .form-card{
+      @apply(--layout-flex);
+      @apply(--layout-vertical-reverse);
+      position: relative;
+      max-width: 390px;
+      /*background-color: blue;*/
+      flex-basis: 100%;
+      min-width: 220px;
+    }
+    .form-content{
+      @apply(--layout-flex);
+      border-radius: 10px;
+      /*margin-top: -100px*/
+      padding-top:  -32px;
+      /*padding-left: 1rem;*/
+      /*padding-right: 1rem;*/
+      /*padding-bottom: 1rem;*/
+      background-color: white;
+    }
+    .form-head{
+      width: 95%;
+      text-align: center;
+      @apply(--paper-font-common-base);
+      margin-top: -30px;
+      margin-bottom: 1px;
+      padding: 0.01px;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      -ms-border-radius: 2px;
+      -o-border-radius: 2px;
+      border-radius: 2px;
+      box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+      background-color: black;
+    }
+  }
     </style>
-    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}">
-    </app-route>
 
     <div flex="">
       <div class="green">
-        <iron-selector selected="[[page]]" attr-for-selected="name" role="navigation">
-          <a name="home" href="/home"><paper-button>Are you look for Pro?</paper-button></a>
-        </iron-selector>
+          <a name="home" href="/home"><paper-button raised="" class="custom indigo">Are you looking for Pro?</paper-button></a>
       </div>
     </div>
-    
+
     <div class="card">
       <div main-title="">
         <div class="form-title">
-          <section class="display3">
-          <h>Join Now</h>
-          </section>
-          <section class="subhead">
-          <h>If you are professional, then you want more customers.</h><br>
-          <h>We can help you.</h>
-          </section>
+          <p class="display3">Join Now</p>
+          <p class="subhead">
+          If you are professional, you want more clients.</p>
+          <p class="subhead2">
+          Our customers are looking for all specialist. Here some samples:
+          </p>
+          <div>
+            <div work="">
+              <div how="">
+                <div><img src="/images/iconhandy.png">
+                </div>
+                <div class="descript">Handyman
+                </div>
+              </div>
+              <div how="">
+                <div><img src="/images/iconclean.png">
+                </div>
+                <div class="descript">Cleaner
+                </div>
+              </div>
+              <div how="">
+                <div><img src="/images/iconpainter.png">
+                </div>
+                <div class="descript">Painter
+                </div>
+              </div>
+              <div how="">
+                <div><img src="/images/iconland.png">
+                </div>
+                <div class="descript">Landscape
+                </div>
+              </div>
+            </div>
+          </div>
+
       </div>
         <div class="form-card">
           <div class="form-block">
             <div class="form-head">
-              <h3>Form Title</h3>
+              <h3>Get More Customers</h3>
             </div>
             <div class="form-content">
 
@@ -123,8 +383,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <paper-input name="name" label="Name" required=""></paper-input>
                 <paper-input name="zip" label="Zip Code" required=""></paper-input>
                 <paper-input name="phone" label="Phone Nuber" required=""></paper-input>
-                <paper-input name="email" label="Email Address" required=""></paper-input>
-                <paper-button raised="" onclick="_nativeSubmit(event)">Submit</paper-button>
+                <paper-input id="emailInput" name="email" label="Email Address" required=""></paper-input>
+                <paper-button raised="" on-tap="login">Submit</paper-button>
               </form>
             </div>
           </div>
@@ -133,11 +393,50 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       </div>
       </div>
+      <div class="container flex-wrap3" align="center">
+        <p class="display2" align="center">Show yourself to the world.</p>
+        <p class="subhead" align="center">Our platform connects you with new clients.</p>
+      </div>
+      <div class="container flex-wrap2">
+          <p class="display2" align="center">How it works?</p>
+          <div class="container flex-wrap">
+            <div class="subhead" align="center"><img src="/images/3d-man-talk.jpg">
+            </div>
+            <div class="subhead" align="center">Customer tell us about his project.
+            </div>
+          </div>
+          <div class="container flex-wrap">
+            <div class="subhead" align="center"><img src="/images/3d-man-deal.jpg">
+            </div>
+            <div class="subhead" align="center">We present your service. And the customer decides.
+            </div>
+          </div>
+          <div class="container flex-wrap">
+            <div class="subhead" align="center"><img src="/images/3d-man-hired.jpg">
+            </div>
+            <div> <p class="display2" align="center">You hired!</p>
+              <p class="subhead" align="center">After you confirm the job, you pay a small fee for the introduction.</p>
+            </div>
+          </div>
+      </div>
   </template>
 
   <script>
     Polymer({
       is: 'my-pro',
+      properties: {
+        user: {
+          type: Object
+        }
+      },
+      login: function() {
+        this.fire('app-auth-on-button-tap',
+                  {
+                    button: 'proSubmit',
+                    email: this.$.emailInput.value
+                  }
+        );
+      }
     });
   </script>
 </dom-module>

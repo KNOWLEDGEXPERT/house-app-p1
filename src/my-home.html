@@ -19,21 +19,53 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         padding: 10px;
       }
+      paper-button.custom {
+          --paper-button-ink-color: var(--paper-pink-a200);
+          /* These could also be individually defined for each of the
+            specific css classes, but we'll just do it once as an example */
+          --paper-button-flat-keyboard-focus: {
+            background-color: var(--paper-pink-a200);
+            color: white !important;
+          };
+          --paper-button-raised-keyboard-focus: {
+            background-color: var(--paper-pink-a200) !important;
+            color: white !important;
+          };
+        }
+        paper-button.custom:hover {
+          background-color: var(--paper-indigo-100);
+        }
+        paper-button.indigo {
+          background-color: var(--paper-indigo-500);
+          color: white;
+          --paper-button-raised-keyboard-focus: {
+            background-color: var(--paper-pink-a200) !important;
+            color: white !important;
+          };
+        }
+        a:link {
+            text-decoration: none;
+        }
+
+        a:visited {
+            text-decoration: none;
+        }
+
+        a:hover {
+          text-decoration: none;
+        }
+
+        a:active {
+          text-decoration: none;
+        }
     </style>
-    <app-route
-        route="{{route}}"
-        pattern="/:page"
-        data="{{routeData}}">
-    </app-route>
 
     <div flex>
       <div class="green">
-        <iron-selector selected="[[page]]" attr-for-selected="name" role="navigation">
-          <a name="pro" href="/pro"><paper-button>Are you a Pro?</paper-icon-button></a>
-        </iron-selector>
+          <a name="pro" href="/pro"><paper-button raised class="custom indigo">Are you a Pro?</paper-icon-button></a>
       </div>
     </div>
-    
+
     <div class="card">
       <div class="circle">1</div>
       <h1>Landpage Costumer</h1>

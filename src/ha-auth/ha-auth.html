@@ -13,12 +13,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="ha-auth">
   <template>
-    <app-auth-firebase id="auth"></app-auth-firebase>
+    <ha-auth-firebase id="auth"></ha-auth-firebase>
   </template>
 
   <script>
     Polymer({
       is: 'ha-auth',
+
+      properties: {
+        // route: {
+        //   type: Object,
+        //   notify: true
+        // }
+      },
+      ready: function () {
+        // console.log(route);
+
+      },
+
+      onButtonTap: function(data) {
+        console.log(data);
+
+        switch (data.button) {
+          case 'proSubmit':
+            this.$.auth.signInAnonymously(data.email);
+              // if (this.$.auth.signInAnonymously(data.email)) {
+              //   // console.log(this.set('route.path', '/dashboard/'));
+            this.set('route.routeData', data.email);
+            this.set('route.path', '/register');
+
+            // console.log(this.route.path);
+            // console.log(this.route.route);
+            // console.log(this.route.routeData);
+            // console.log(this.route.subroute);
+
+            // }
+          break;
+        }
+      }
     });
   </script>
 </dom-module>
