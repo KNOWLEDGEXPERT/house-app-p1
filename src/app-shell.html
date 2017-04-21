@@ -71,6 +71,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         /*padding-left: 150px;*/
         /*align-content: center;*/
       }
+      .text-menu2 {
+        /*padding-left: -64px;*/
+        /*background-color: blue;*/
+        opacity: var(--dark-secundary-opacity);
+        @apply(--paper-font-menu);
+        /*text-align: center*/
+        /*position: relative;*/
+        /*align: center;*/
+        /*padding-left: 150px;*/
+        /*align-content: center;*/
+      }
       .drawer-list a {
         display: block;
         padding: 0 16px;
@@ -93,9 +104,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         .text-menu {
           display: none;
         }
-        .logo-menu {
+        .text-menu2 {
+          display: none;
         }
-      }
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -104,7 +115,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         pattern="/:page"
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
-        
+
     <!-- firebase connection -->
     <app-auth id="auth"></app-auth>
 
@@ -126,9 +137,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <app-toolbar>
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             <div class="logo-menu" style="margin:0 auto"><img src="/images/logoicon.png">
-            <h class="text-menu">housejoin</h></div>
+            <h class="text-menu"><img src="/images/nameicon.jpg"></h></div>
             <paper-icon-button icon="my-icons:person" drawer-toggle></paper-icon-button>
-            <h class="text-menu">Log in</h>
+            <h class="text-menu2">Log in</h>
           </app-toolbar>
         </app-header>
 
