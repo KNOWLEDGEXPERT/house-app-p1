@@ -10,6 +10,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-styles/color.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/paper-search/paper-search-bar.html">
+
 
 <dom-module id="my-home">
   <template>
@@ -17,7 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
 
-        padding: 10px;
+        /*padding: 10px;*/
       }
       paper-button.custom {
           --paper-button-ink-color: var(--paper-pink-a200);
@@ -58,6 +67,325 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         a:active {
           text-decoration: none;
         }
+        button {
+          /*margin-top: 20px;*/
+        }
+        paper-icon-button {
+          color: #2196F3;
+          --paper-icon-button-ink-color: white;
+        }
+        [main-title] {
+          @apply(--layout-horizontal);
+          @apply(--layout-center);
+          @apply(--layout-center-justified);
+          /*padding: 8px 24px;*/
+          flex-basis: 100%;
+          background-color:#fdfdfd;
+        }
+        [how] {
+          @apply(--layout-horizontal);
+          /*@apply(--layout-center);*/
+          @apply(--layout-center-justified);
+          @apply(--layout-flex);
+          /*padding: 8px 60px;*/
+          /*flex-basis: 100%;*/
+          background-color:#fdfdfd;
+        }
+        .form-content{
+          @apply(--layout-flex);
+          border-radius: 10px;
+          /*margin-top: -100px*/
+          /*padding-top:  -32px;*/
+          /*padding-left: 1rem;
+          padding-right: 1rem;
+          padding-bottom: 1rem;*/
+          /*background-color: orange;*/
+        }
+        .form-head{
+          color: #fff;
+          @apply(--paper-font-common-base);
+          width: 95%;
+          text-align: center;
+          /*margin-top: -50px;*/
+          margin-bottom: 1px;
+          padding: 1px;
+          -webkit-border-radius: 2px;
+          -moz-border-radius: 2px;
+          -ms-border-radius: 2px;
+          -o-border-radius: 2px;
+          border-radius: 2px;
+          box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+          background:  -webkit-linear-gradient( right, transparent 1%, transparent 10%, rgba(72,133,237,0.8) 100%);
+          background-color:#fdfdfd;
+        }
+        .form-block{
+          position: relative;
+          @apply(--layout-flex);
+          padding: 1rem;
+          margin-top: 2rem;
+          /*margin-left: 2rem;
+          margin-right: 2rem;*/
+          box-shadow: 0 0 10px rgba(0,0,0,0.13);
+          min-width: 300px;
+          /*background-color: yellow;*/
+        }
+        .form-card{
+          @apply(--layout-flex);
+          @apply(--layout-vertical-reverse);
+          position: relative;
+          max-width: 390px;
+        }
+          /*background-color: blue;*/
+        .logo-title{
+            /*@apply(--layout-flex);*/
+            /*flex-basis: 5%;*/
+            box-sizing: border-box;
+            color: #000;
+            /*background-color: red;*/
+          }
+          .logo{
+            @apply(--layout-flex);
+            align-content: center;
+            /*flex-basis: 5%;*/
+            box-sizing: border-box;
+            color: #000;
+            background-color: red;
+          }
+          .display3{
+            @apply(--paper-font-display3);
+            opacity: var(--dark-primary-opacity);
+            color: black;
+            /*@apply(--layout-flex);*/
+          }
+          .display2{
+            @apply(--paper-font-display2);
+            opacity: var(--dark-primary-opacity);
+            text-align: center;
+          }
+          .subhead{
+            @apply(--paper-font-subhead);
+            opacity: var(--dark-primary-opacity);
+            flex-basis: auto;
+            font-size: 18px;
+            /*font-weight: 400;*/
+            /*line-height: 24px;*/
+            /*padding-top: 12px;*/
+          }
+          .subhead2{
+            @apply(--paper-font-subhead);
+            opacity: var(--dark-secondary-opacity);
+            flex-basis: auto;
+            /*padding-right: 16px;*/
+          }
+          .descript{
+            @apply(--paper-font-common-base);
+            opacity: var(--dark-secondary-opacity);
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 20px;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+          }
+          [work] {
+            @apply(--layout-horizontal);
+            /*@apply(--layout-center);*/
+            /*@apply(--layout-center-justified);*/
+            padding: 8px 8px;
+            /*background-color:yellow;*/
+          }
+          [how] {
+            @apply(--layout-vertical);
+            @apply(--layout-flex);
+            /*@apply(--layout-center);*/
+            @apply(--layout-center-justified);
+            /*padding: 50px 1px;*/
+            /*flex-basis: 100%;*/
+            /*background-color:yellow;*/
+          }
+          .flex-wrap {
+            @apply(--layout-horizontal);
+            @apply(--layout-flex-none);
+            /*@apply(--layout-wrap);*/
+            /*background-color: yellow;*/
+          }
+          .flex-wrap2 {
+            @apply(--layout-vertical);
+            @apply(--layout-center-aligned);
+            width: 100%;
+            /*background-color: blue;*/
+          }
+          .flex-wrap3 {
+            @apply(--layout-vertical);
+            @apply(--layout-wrap);
+            width: 100%;
+            background-color: #F1f1f1;
+          }
+          .flex-wrap4 {
+            @apply(--layout-horizontal);
+            @apply(--layout-flex-none);
+            /*background-color: #F1f1f1;*/
+          }
+          .container{
+            @apply(--layout-center-center);
+
+          }
+          h1 {
+            @apply(--paper-font-common-base);
+            text-align: center;
+            text-shadow: 2px 2px black;
+            background-image: url(/images/backsmart.jpg);
+            background-size: cover;
+            padding-top: 36px;
+            padding-bottom: 36px;
+            color: white;
+          }
+          paper-button.custom {
+              --paper-button-ink-color: var(--paper-pink-a200);
+              /* These could also be individually defined for each of the
+                specific css classes, but we'll just do it once as an example */
+              --paper-button-flat-keyboard-focus: {
+                background-color: var(--paper-pink-a200);
+                color: white !important;
+              };
+              --paper-button-raised-keyboard-focus: {
+                background-color: var(--paper-pink-a200) !important;
+                color: white !important;
+              };
+            }
+            paper-button.custom:hover {
+              background-color: var(--paper-indigo-100);
+            }
+            paper-button.indigo {
+              background-color: var(--paper-indigo-500);
+              color: white;
+              --paper-button-raised-keyboard-focus: {
+                background-color: var(--paper-pink-a200) !important;
+                color: white !important;
+              };
+            }
+            a:link {
+                text-decoration: none;
+            }
+
+            a:visited {
+                text-decoration: none;
+            }
+
+            a:hover {
+              text-decoration: none;
+            }
+
+            a:active {
+              text-decoration: none;
+            }
+        @media(max-width: 600px) {
+          [main-title] {
+          @apply(--layout-vertical-reverse);
+          /*flex-basis: 100%;*/
+          background-color:#fdfdfd;
+          position: relative;
+          }
+          .flex-wrap {
+            @apply(--layout-vertical);
+            @apply(--layout-wrap);
+            width: 100%;
+            background-color: white;
+          }
+          .flex-wrap2 {
+            @apply(--layout-vertical);
+            @apply(--layout-wrap);
+            width: 100%;
+            background-color: white;
+          }
+          .flex-wrap3 {
+            @apply(--layout-vertical);
+            @apply(--layout-wrap);
+            width: 100%;
+            background-color: #F1f1f1;
+          }
+          .flex-wrap4 {
+            @apply(--layout-vertical-reverse);
+            @apply(--layout-wrap);
+            width: 100%;
+            /*background-color: #F1f1f1;*/
+          }
+          [how] {
+            @apply(--layout-vertical);
+            @apply(--layout-flex);
+            /*@apply(--layout-center);*/
+            @apply(--layout-center-justified);
+            /*padding: 50px 1px;*/
+            /*flex-basis: 100%;*/
+            /*background-color:yellow;*/
+          }
+          [work] {
+            @apply(--layout-horizontal);
+            @apply(--layout-flex);
+            /*@apply(--layout-center);*/
+            /*@apply(--layout-vertical);*/
+            /*padding: 8px 8px;*/
+            /*background-color:yellow;*/
+          }
+          .form-block{
+            position: relative;
+            @apply(--layout-vertical-justified);
+            @apply(--layout-center);
+            /*flex-basis: %;*/
+            /*padding: 1rem;*/
+            /*margin-top: 2rem;*/
+            /*margin-bottom: 2rem;*/
+            /*margin-left: 2rem;
+            margin-right: 2rem;*/
+            box-shadow: 0 0 10px rgba(0,0,0,0.13);
+            min-width: 300px;
+            padding: 0;
+            flex-basis: 100%;
+        }
+        .card{
+          @apply(--layout-flex);
+          @apply(--layout-vertical-reverse);
+          position: relative;
+          /*max-width: 390px;*/
+          /*background-color: blue;*/
+          width: 100%;
+          min-width: 220px;
+        }
+        .form-card{
+          @apply(--layout-flex);
+          @apply(--layout-vertical-reverse);
+          position: relative;
+          max-width: 390px;
+          /*background-color: blue;*/
+          flex-basis: 100%;
+          min-width: 220px;
+        }
+        .form-content{
+          @apply(--layout-flex);
+          border-radius: 10px;
+          /*margin-top: -100px*/
+          padding-top:  -32px;
+          /*padding-left: 1rem;*/
+          /*padding-right: 1rem;*/
+          /*padding-bottom: 1rem;*/
+          background-color: white;
+        }
+        .form-head{
+          width: 95%;
+          text-align: center;
+          @apply(--paper-font-common-base);
+          margin-top: -30px;
+          margin-bottom: 1px;
+          padding: 0.01px;
+          -webkit-border-radius: 2px;
+          -moz-border-radius: 2px;
+          -ms-border-radius: 2px;
+          -o-border-radius: 2px;
+          border-radius: 2px;
+          box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+          background-color: black;
+        }
+      }
     </style>
 
     <div flex>
@@ -65,13 +393,72 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a name="pro" href="/pro"><paper-button raised class="custom indigo">Are you a Pro?</paper-icon-button></a>
       </div>
     </div>
-
-    <div class="card">
-      <div class="circle">1</div>
-      <h1>Landpage Costumer</h1>
-      <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
-      <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
+    <div>
+      <h1>We connect you with the best professionals. It's free.</h1>
+      <p>Search what do you need or choose one category:</p>
+    <p class="subhead"><paper-search-bar></p>
+      <div>
+        <div work>
+          <div how>
+            <div align="center"><img src="/images/iconhandy.png">
+            </div>
+            <div class="descript">Handyman
+            </div>
+          </div>
+          <div how>
+            <div align="center"><img src="/images/iconclean.png">
+            </div>
+            <div class="descript">Cleaner
+            </div>
+          </div>
+          <div how>
+            <div align="center"><img src="/images/iconpainter.png">
+            </div>
+            <div class="descript">Painter
+            </div>
+          </div>
+          <div how>
+            <div align="center"><img src="/images/iconland.png">
+            </div>
+            <div class="descript">Landscape
+            </div>
+          </div>
+          <div how>
+            <div align="center"><img src="/images/iconother.png">
+            </div>
+            <div class="descript">Other
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="container flex-wrap3" align="center">
+      <p class="display2" align="center">New construction, improvement, maintain?</p>
+      <p class="subhead" align="center">Our platform research and connects you with pros.</p>
+    </div>
+    <div class="container flex-wrap2">
+        <p class="display2" align="center">See how simple it works</p>
+        <div class="container flex-wrap">
+          <div class="subhead" align="center"><img src="/images/3d-man-talk.jpg">
+          </div>
+          <div class="subhead" align="center">You tell us about your project.
+          </div>
+        </div>
+        <div class="container flex-wrap4">
+          <div class="subhead" align="center">We research professionals and present to you compare and select who is the best for your job.
+          </div>
+          <div class="subhead" align="center"><img src="/images/3d-man-deal.jpg">
+          </div>
+        </div>
+        <div class="container flex-wrap">
+          <div class="subhead" align="center"><img src="/images/3d-man-hired.jpg">
+          </div>
+          <div> <p class="display2" align="center">Done!</p>
+            <p class="subhead" align="center">We present and connect you with the selected pro. Best of all, you don't need to pay for our services.</p>
+          </div>
+        </div>
+    </div>
+
   </template>
 
   <script>
