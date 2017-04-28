@@ -15,7 +15,7 @@
                    app-name="house-app"
                    user="{{user}}"
                    signed-in="{{signedIn}}"
-                   on-error="showError">
+                   on-error="_onAuthError">
     </firebase-auth>
 
   </template>
@@ -23,16 +23,109 @@
   <script>
     Polymer({
       is: 'ha-auth-firebase',
-      signInAnonymously: function (emailInput) {
-        console.log(emailInput);
-        this.$.firebaseAuth.signInAnonymously();
-        this.$.firebaseAuth.user.updateProfile({
-          // email: emailInput,
-          photoURL: "https://example.com/jane-q-user/profile.jpg"
+      properties: {
+        app: {
+          type: Object,
+          notify: true
+        },
+
+        signedIn: {
+          type: Boolean,
+          observer: '_observeSignedIn'
+        },
+
+        user: {
+          type: Boolean,
+          observer: '_observeUser'
+        }
+      },
+
+      // Checking if use is log in
+      _observeSignedIn: function() {
+        this.debounce('observeSignedIn', function() {
+          this.set('app.isSignedIn', this.signedIn);
+        }, 300);
+      },
+
+      // Checking if profile changed
+      _observeUser: function() {
+        this.debounce('observeUser', function() {
+          this.set('app.userProfile', this.user);
+        }, 300);
+      },
+
+      _onAuthError: function(event) {
+        // this._error('app-auth-firebase:', event.detail);
+        console.log('app-auth-firebase:' + event.detail);
+        this.fire('notify', {
+          type: 'error',
+          icon: 'security',
+          message: event.detail.message
         });
+      },
+
+      signInAnonymously: function() {
+        this.$.firebaseAuth.signInAnonymously();
+        console.log(this.$.firebaseAuth.user);
+      },
+
+      createUserWithEmailAndPasswordPro: function(data) {
+
+        console.log(this.user);
+        console.log(this.$.firebaseAuth.signedIn);
+        console.log(this.$.firebaseAuth.statusKnown);
         console.log(this.$.firebaseAuth.user);
 
+        this.$.firebaseAuth.createUserWithEmailAndPassword(data.email, data.phone)
+                            .then(function(user) {
+                                user.updateProfile({
+                                  displayName: data.name
+                                })
+                                    .then(function() {
+                                            // Update successful.
+                                          },
+                                          function(error) {
+                                            // An error happened.
+                                            console.log('updateProfile.displayName error');
+                                            console.error(error);
+                                          }
+                                    );
+                                  },
+                                  //Error when tried to create a user
+                                  function(error) {
+                                    // Handle Errors here.
+                                    var errorCode = error.code;
+                                    var errorMessage = error.message;
+                                    // [START_EXCLUDE]
+                                    if (errorCode == 'auth/weak-password') {
+                                      alert('The password is too weak.');
+                                    } else {
+                                      console.error(error);
+                                    }
+                                    // [END_EXCLUDE]
+                            });
+
+        console.log(this.$.firebaseAuth.user);
+      },
+
+      createUserWithEmailAndPassword: function(email, password) {
+
+        console.log(this.user);
+        console.log(this.$.firebaseAuth.signedIn);
+        console.log(this.$.firebaseAuth.statusKnown);
+        console.log(this.$.firebaseAuth.user);
+
+        this.$.firebaseAuth.createUserWithEmailAndPassword(email, password);
+
+        console.log(this.$.firebaseAuth.user);
+      },
+
+      signOut: function() {
+        this.$.firebaseAuth.signOut();
+        this.set('route.path', '/');
+
       }
+
     });
   </script>
 </dom-module>

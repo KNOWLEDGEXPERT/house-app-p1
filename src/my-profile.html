@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
 
-<dom-module id="my-register">
+<dom-module id="my-profile">
   <template>
     <style include="shared-styles">
       :host {
@@ -24,24 +24,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="card">
       <div class="circle">R</div>
       <h1>Register</h1>
-      <p>{{email}}</p>
+
+
+      <p>uid: [[app.userProfile.uid]]</p>
+      <p>name: [[app.userProfile.displayName]]</p>
+      <p>email: [[app.userProfile.email]]</p>
+      <p>emailVerified: [[app.userProfile.emailVerified]]</p>
+      <p>identifierNumber: [[app.userProfile.identifierNumber]]</p>
+      <p>photoURL: [[app.userProfile.photoURL]]</p>
+
+      <p>zip: [[userInfo.zip]]</p>
+      <p>phone: [[userInfo.phone]]</p>
       <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
     </div>
   </template>
 
   <script>
     Polymer({
-      is: 'my-register',
+      is: 'my-profile',
       properties:{
-          email: {
-            type: String,
-            reflectToAttribute: true,
+          app: {
+            type: Object,
+            reflectToAttribute: true
           }
       },
-      fillData: function(data){
-        console.log(data);
-        this.set('email', 'data');
+      ready: function () {
+        // console.log(this.app.userProfile.email);
       }
+
 
     });
   </script>

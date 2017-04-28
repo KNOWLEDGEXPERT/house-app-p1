@@ -382,11 +382,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="form-content">
 
               <form is="iron-form" id="redirectDemo">
-                <paper-input name="name" label="Name" required></paper-input>
-                <paper-input name="zip" label="Zip Code" required></paper-input>
-                <paper-input name="phone" label="Phone Nuber" required></paper-input>
-                <paper-input id="emailInput" name="email" label="Email Address" required></paper-input>
-                <paper-button raised on-tap="login">Submit</paper-button>
+                <paper-input id="nameInput" name="name" label="Name" type="text" required></paper-input>
+                <paper-input id="zipInput" name="zip" label="Zip Code " type="number" required></paper-input>
+                <paper-input id="phoneInput" name="phone" label="Phone Nuber {temp password}" type="number" required></paper-input>
+                <paper-input id="emailInput" name="email" label="Email Address" type="text" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required></paper-input>
+                <paper-button raised on-tap="register" disabled$="{{app.isSignedIn}}">Submit</paper-button>
               </form>
             </div>
           </div>
@@ -426,16 +426,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     Polymer({
       is: 'my-pro',
-      properties: {
-        user: {
-          type: Object
-        }
-      },
-      login: function() {
-        this.fire('app-auth-on-button-tap',
+
+      register: function() {
+
+        this.fire('info-updated',
                   {
-                    button: 'proSubmit',
-                    email: this.$.emailInput.value
+                    button: 'registerPro',
+                    name: this.$.nameInput.value,
+                    zip: this.$.zipInput.value,
+                    phone: this.$.phoneInput.value,
+                    email: this.$.emailInput.value,
                   }
         );
       }

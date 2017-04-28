@@ -2,10 +2,11 @@
   "entrypoint": "index.html",
   "shell": "src/app-shell.html",
   "fragments": [
+    "src/app-storage.html",
     "src/my-home.html",
     "src/my-pro.html",
     "src/my-login.html",
-    "src/my-register.html",
+    "src/my-profile.html",
     "src/my-view404.html"
   ],
   "sources": [

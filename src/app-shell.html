@@ -15,13 +15,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
-<link rel="import" href="../bower_components/app-route/app-location.html">
-<link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-styles/typography.html">
 <link rel="import" href="../bower_components/paper-styles/color.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="app-storage.html">
+
 <link rel="import" href="my-icons.html">
 <!-- App firebase connection -->
 <link rel="import" href="ha-auth/ha-auth.html">
@@ -107,6 +109,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         .text-menu2 {
           display: none;
         }
+      }
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -116,8 +119,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
 
+    <!-- Use to storage status connection user -->
+    <app-storage app="{{app}}"></app-storage>
+
+
     <!-- firebase connection -->
-    <ha-auth id="auth" route="{{route}}"></ha-auth>
+    <ha-auth id="auth" app="{{app}}" route="{{route}}"></ha-auth>
 
     <app-drawer-layout fullbleed force-narrow>
       <!-- Drawer content -->
@@ -127,6 +134,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a name="home" href="/home">Home</a>
           <a name="pro" href="/pro">Pro</a>
           <a name="view3" href="/login">Log In</a>
+          <div class="Navigation-link" hidden$="{{!app.isSignedIn}}" on-tap="_onSignOutTap">
+
+            <iron-icon class="Navigation-icon" icon="drawer:sign-out"></iron-icon>
+            <span class="Navigation-text">Sign out [[app.isSignedIn]]</span>
+          </div>
         </iron-selector>
       </app-drawer>
 
@@ -149,8 +161,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             fallback-selection="view404"
             role="main">
           <my-home name="home"></my-home>
-          <my-pro name="pro"></my-pro>
-          <my-register name="register"></my-register>
+          <my-pro name="pro" app="{{app}}" route="{{route}}" user-info="[[userInfo]]"></my-pro>
+          <my-profile name="profile" app="{{app}}"  route="{{route}}" user-info="[[userInfo]]" ></my-profile>
           <my-login name="login"></my-login>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
@@ -163,6 +175,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'app-shell',
 
       properties: {
+        app:{
+          type: Object,
+          value:{
+            isSignedIn: false
+          }
+        },
         page: {
           type: String,
           reflectToAttribute: true,
@@ -171,12 +189,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       listeners: {
-        'app-auth-on-button-tap': '_onAppAuthButtonTap'
+        'app-auth-button-tap': '_onAppAuthButtonTap',
+        'info-updated':'_updateInfo',
+        'notify': '_onNotify'//TODO
       },
 
       observers: [
         '_routePageChanged(routeData.page)',
       ],
+
+      // ready: function() {
+      // },
+
+      _onNotify: function(event) {
+        if (Polymer.isInstance(this.$.snackbar)) {
+          this.$.snackbar.show(event.detail);
+        } else {
+          this.importHref(this.resolveUrl('app-ui-components/app-snackbar/app-snackbar.html'), function() {
+            this.$.snackbar.show(event.detail);
+          });
+        }
+      },
 
       _routePageChanged: function(page) {
         this.page = page || 'home';
@@ -190,21 +223,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // Load page import on demand. Show 404 page if fails
         var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
         this.importHref(resolvedPageUrl, null, this._showPage404, true);
-        console.log(this.route.path);
-        console.log(this.route.route);
-        console.log(this.route.routeData);
-        console.log(this.route.subroute);
+        // console.log('Route Path: ' + this.route.path);
+        // console.log('Data: ' + this.routeData);
+        // console.log('Page: ' + this.routeData.page);
       },
 
       _showPage404: function() {
         this.page = 'view404';
-        console.log(this.route);
+      },
+
+      _onAppAuthButtonTap: function(e) {
+        this.$.auth.onButtonTap(e.detail);
+      },
+
+      _updateInfo: function(e) {
+        this.set('userInfo', e.detail);
+        //Create a firebase user
+        this.$.auth.onButtonTap(e.detail);
+        //redirect to /profile path. However it is redirect before firebase return user
+        this.set('route.path', '/profile');
+        // this.$.auth.onButtonTap(e.detail)
+        //            .then(
+        //              function() {
+        //                this.set('route.path', '/profile');
+        //              },
+        //              function(error) {
+        //                console.log(error);
+        //              }.bind(this));
 
       },
 
-      _onAppAuthButtonTap: function(event) {
-        this.$.auth.onButtonTap(event.detail);
+      _onSignOutTap: function() {
+        this.opened = false;
+        this.fire('app-auth-button-tap', {
+          button: 'signOut'
+        });
       }
+
     });
   </script>
 </dom-module>
