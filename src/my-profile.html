@@ -9,6 +9,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-query.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="my-profile">
@@ -20,7 +25,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 10px;
       }
     </style>
+    <firebase-auth user="{{user}}"></firebase-auth>
 
+    <firebase-query
+      id="query"
+      path="/users/[[user.uid]]/profileExtend"
+      data="{{profileExtend}}">
+    </firebase-query>
     <div class="card">
       <div class="circle">R</div>
       <h1>Register</h1>
@@ -33,9 +44,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <p>identifierNumber: [[app.userProfile.identifierNumber]]</p>
       <p>photoURL: [[app.userProfile.photoURL]]</p>
 
-      <p>zip: [[userInfo.zip]]</p>
-      <p>phone: [[userInfo.phone]]</p>
+
+      <template is="dom-repeat" items="[[profileExtend]]" as="profile">
+        <p>zip: [[profile.zip]]</p>
+        <p>phone: [[profile.phone]]</p>
+      </template>
+      <p>key: [[profileExtend.key]]</p>
+
+      <template is="dom-repeat" items="[[profileExtend]]" as="profile">
+        <paper-input id="zipInput" name="zip" label="Zip Code" type="number" value$="[[profile.zip]]" required></paper-input>
+        <paper-input id="phoneInput" name="phone" label="Phone Nuber {temp password}" value$="[[profile.zip]]" type="number" required></paper-input>
+        <!-- <p>zip: </p>
+        <p>phone: </p> -->
+      </template>
+
+
+
+      <paper-button raised on-tap="save" disabled$="{{!app.isSignedIn}}">save</paper-button>
+
+
       <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
+
+
     </div>
   </template>
 
@@ -46,12 +76,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           app: {
             type: Object,
             reflectToAttribute: true
+          },
+          profileExtend: {
+            type: Object
           }
-      },
-      ready: function () {
-        // console.log(this.app.userProfile.email);
-      }
 
+      },
+      ready: function(){
+        // console.log(this.user.uid);
+      },
+
+      save: function(){
+
+        this.$.query.ref.push({
+          zip: data.zip,
+          phone: data.phone
+        });
+
+      }
 
     });
   </script>

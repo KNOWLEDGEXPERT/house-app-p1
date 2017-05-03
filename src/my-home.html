@@ -28,6 +28,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         /*padding: 10px;*/
       }
+      .service{
+        @apply(--layout-horizontal-reverse);
+      }
       paper-button.custom {
           --paper-button-ink-color: var(--paper-pink-a200);
           /* These could also be individually defined for each of the
@@ -388,8 +391,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <div flex>
-      <div class="green">
+    <div class="service">
+      <div>
           <a name="pro" href="/pro"><paper-button raised class="custom indigo">Are you a Pro?</paper-icon-button></a>
       </div>
     </div>

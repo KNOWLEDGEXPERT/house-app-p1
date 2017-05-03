@@ -1,22 +1,27 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../../bower_components/polymerfire/firebase-auth.html">
 
 <dom-module id="ha-auth-firebase">
   <template>
     <firebase-app id="firebaseApp"
-                  name="house-app"
                   auth-domain="house-app-dev-p1.firebaseapp.com"
                   database-url="https://house-app-dev-p1.firebaseio.com/"
                   api-key="AIzaSyC4-KCt4e0YMhDjkE4iB-FdbRfZspl1ELs">
     </firebase-app>
 
     <firebase-auth id="firebaseAuth"
-                   app-name="house-app"
                    user="{{user}}"
                    signed-in="{{signedIn}}"
                    on-error="_onAuthError">
     </firebase-auth>
+
+    <firebase-query
+      id="query"
+      path="/users/[[user.uid]]/profileExtend"
+      data="{{profileExtend}}">
+    </firebase-query>
 
   </template>
 
@@ -76,36 +81,72 @@
         console.log(this.$.firebaseAuth.statusKnown);
         console.log(this.$.firebaseAuth.user);
 
-        this.$.firebaseAuth.createUserWithEmailAndPassword(data.email, data.phone)
-                            .then(function(user) {
-                                user.updateProfile({
-                                  displayName: data.name
-                                })
-                                    .then(function() {
-                                            // Update successful.
-                                          },
-                                          function(error) {
-                                            // An error happened.
-                                            console.log('updateProfile.displayName error');
-                                            console.error(error);
+        // make this context avarible inside the promise.
+        var that = this;
+          return new Promise(function(resolve, reject) {
+            this.$.firebaseAuth.createUserWithEmailAndPassword(data.email, data.phone)
+                                .then(function(user) {
+                                    user.updateProfile({
+                                      displayName: data.name
+                                    })
+                                        .then(function() {
+                                            that.$.query.ref.push({
+                                              zip: data.zip,
+                                              phone: data.phone
+                                            });
                                           }
-                                    );
-                                  },
-                                  //Error when tried to create a user
-                                  function(error) {
-                                    // Handle Errors here.
-                                    var errorCode = error.code;
-                                    var errorMessage = error.message;
-                                    // [START_EXCLUDE]
-                                    if (errorCode == 'auth/weak-password') {
-                                      alert('The password is too weak.');
-                                    } else {
-                                      console.error(error);
-                                    }
-                                    // [END_EXCLUDE]
-                            });
+                                        );
+                                      },
+                                      //Error when tried to create a user
+                                      function(error) {
+                                        // Handle Errors here.
+                                        var errorCode = error.code;
+                                        var errorMessage = error.message;
+                                        // [START_EXCLUDE]
+                                        if (errorCode == 'auth/weak-password') {
+                                          alert('The password is too weak.');
+                                        } else {
+                                          console.error(error);
+                                        }
+                                        // [END_EXCLUDE]
 
-        console.log(this.$.firebaseAuth.user);
+
+              // resolve(response);
+            }).catch(function(error) {
+              // reject(error);
+            });
+          }.bind(this));
+
+        // this.$.firebaseAuth.createUserWithEmailAndPassword(data.email, data.phone)
+        //                     .then(function(user) {
+        //                         user.updateProfile({
+        //                           displayName: data.name
+        //                         })
+        //                             .then(function() {
+        //                                     // Update successful.
+        //                                   },
+        //                                   function(error) {
+        //                                     // An error happened.
+        //                                     console.log('updateProfile.displayName error');
+        //                                     console.error(error);
+        //                                   }
+        //                             );
+        //                           },
+        //                           //Error when tried to create a user
+        //                           function(error) {
+        //                             // Handle Errors here.
+        //                             var errorCode = error.code;
+        //                             var errorMessage = error.message;
+        //                             // [START_EXCLUDE]
+        //                             if (errorCode == 'auth/weak-password') {
+        //                               alert('The password is too weak.');
+        //                             } else {
+        //                               console.error(error);
+        //                             }
+        //                             // [END_EXCLUDE]
+        //                     });
+        //
+        // console.log(this.$.firebaseAuth.user);
       },
 
       createUserWithEmailAndPassword: function(email, password) {

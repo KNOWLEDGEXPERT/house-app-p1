@@ -19,120 +19,74 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </head><body><dom-module id="my-pro">
   <template>
     <style include="shared-styles">
-    :host {
-        display: block;
+      :host {
+        /*display: block;*/
         /*padding: 10px;*/
-    }
-    form > paper-button {
-     width: 45%;
-     margin-top: 20px;
-    }
-    form > paper-button:not([disabled]) {
-     background: var(--paper-light-blue-500);
-     color: white;
-    }
-    button {
-      margin-top: 20px;
-    }
-    paper-icon-button {
-      color: #2196F3;
-      --paper-icon-button-ink-color: white;
-    }
-    [main-title] {
-      @apply(--layout-horizontal);
-      @apply(--layout-center);
-      @apply(--layout-center-justified);
-      padding: 8px 24px;
-      flex-basis: 100%;
-      background-color:#fdfdfd;
-    }
-    [how] {
-      @apply(--layout-horizontal);
-      /*@apply(--layout-center);*/
-      @apply(--layout-center-justified);
-      @apply(--layout-flex);
-      /*padding: 8px 60px;*/
-      /*flex-basis: 100%;*/
-      background-color:#fdfdfd;
-    }
-    .form-content{
-      @apply(--layout-flex);
-      border-radius: 10px;
-      /*margin-top: -100px*/
-      /*padding-top:  -32px;*/
-      padding-left: 1rem;
-      padding-right: 1rem;
-      padding-bottom: 1rem;
-      /*background-color: orange;*/
-    }
-    .form-head{
-      color: #fff;
-      @apply(--paper-font-common-base);
-      width: 95%;
-      text-align: center;
-      margin-top: -50px;
-      margin-bottom: 1px;
-      padding: 1px;
-      -webkit-border-radius: 2px;
-      -moz-border-radius: 2px;
-      -ms-border-radius: 2px;
-      -o-border-radius: 2px;
-      border-radius: 2px;
-      box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
-      background:  -webkit-linear-gradient( right, transparent 1%, transparent 10%, rgba(72,133,237,0.8) 100%);
-      background-color:#fdfdfd;
-    }
-    .form-block{
-      position: relative;
-      @apply(--layout-flex);
-      padding: 1rem;
-      margin-top: 2rem;
-      /*margin-left: 2rem;
-      margin-right: 2rem;*/
-      box-shadow: 0 0 10px rgba(0,0,0,0.13);
-      min-width: 300px;
-      /*background-color: yellow;*/
-    }
-    .form-card{
-      @apply(--layout-flex);
-      @apply(--layout-vertical-reverse);
-      position: relative;
-      max-width: 390px;
-    }
-      /*background-color: blue;*/
-    .logo-title{
-        /*@apply(--layout-flex);*/
-        /*flex-basis: 5%;*/
-        box-sizing: border-box;
-        color: #000;
-        /*background-color: red;*/
       }
-      .logo{
+      .service{
+        @apply(--layout-horizontal-reverse);
+      }
+      paper-button.custom {
+        --paper-button-ink-color: var(--paper-pink-a200);
+        /* These could also be individually defined for each of the
+          specific css classes, but we'll just do it once as an example */
+        --paper-button-flat-keyboard-focus: {
+          background-color: var(--paper-pink-a200);
+          color: white !important;
+        };
+        --paper-button-raised-keyboard-focus: {
+          background-color: var(--paper-pink-a200) !important;
+          color: white !important;
+        };
+      }
+      paper-button.custom:hover {
+        background-color: var(--paper-indigo-100);
+      }
+      paper-button.indigo {
+        background-color: var(--paper-indigo-500);
+        color: white;
+        --paper-button-raised-keyboard-focus: {
+          background-color: var(--paper-pink-a200) !important;
+          color: white !important;
+        };
+      }
+      a:link {
+          text-decoration: none;
+      }
+      a:visited {
+          text-decoration: none;
+      }
+      a:hover {
+        text-decoration: none;
+      }
+      a:active {
+        text-decoration: none;
+      }
+      .card{
+        @apply(--layout-horizontal);
+      }
+      .main-container {
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--layout-center-justified);
+        padding: 8px 24px;
+        /*-webkit-flex-basis: 100%; /* Safari 6.1+ */
+        flex-basis: 100%;
+        background-color:#fdfdfd;
+      }
+      .left-container{
         @apply(--layout-flex);
-        align-content: center;
-        /*flex-basis: 5%;*/
-        box-sizing: border-box;
-        color: #000;
-        background-color: red;
       }
       .display3{
         @apply(--paper-font-display3);
+        color: black;
         opacity: var(--dark-primary-opacity);
-        /*@apply(--layout-flex);*/
-      }
-      .display2{
-        @apply(--paper-font-display2);
-        opacity: var(--dark-primary-opacity);
-        text-align: center;
       }
       .subhead{
         @apply(--paper-font-subhead);
         opacity: var(--dark-primary-opacity);
         flex-basis: auto;
         font-size: 18px;
-        /*font-weight: 400;*/
-        /*line-height: 24px;*/
-        /*padding-top: 12px;*/
       }
       .subhead2{
         @apply(--paper-font-subhead);
@@ -140,214 +94,178 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         flex-basis: auto;
         padding-right: 16px;
       }
-      .descript{
+      [work] {
+        @apply(--layout-horizontal);
+        padding: 8px 8px;
+      }
+      /*background-color:yellow;*/
+      /*@apply(--layout-center);*/
+      /*@apply(--layout-center-justified);*/
+
+      [how] {
+        @apply(--layout-vertical);
+        @apply(--layout-flex);
+        @apply(--layout-center-justified);
+      }
+      .form-card{
+        @apply(--layout-flex);
+        @apply(--layout-center);
+        max-width: 320px;
+      }
+      .form-block{
+        @apply(--layout-flex);
+        @apply(--layout-center);
+        padding: 1rem;
+        margin-top: 2rem;
+        box-shadow: 0 0 10px rgba(0,0,0,0.13);
+        /*min-width: 300px;*/
+      }
+      .form-head{
+        flex-basis: 75%;
+        text-align: center;
+        color: #fff;
+        @apply(--paper-font-common-base);
+        margin-top: -50px;
+        margin-bottom: 1px;
+        padding: 1px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        -ms-border-radius: 2px;
+        -o-border-radius: 2px;
+        border-radius: 2px;
+        box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+        background:  -webkit-linear-gradient( right, transparent 1%, transparent 10%, rgba(72,133,237,0.8) 100%);
+        background-color:#fdfdfd;
+      }
+
+      form > paper-button {
+       width: 45%;
+       margin-top: 20px;
+      }
+      form > paper-button:not([disabled]) {
+       background: var(--paper-light-blue-500);
+       color: white;
+      }
+      button {
+        margin-top: 20px;
+      }
+      paper-icon-button {
+        color: #2196F3;
+        --paper-icon-button-ink-color: white;
+      }
+
+      .form-content{
+        @apply(--layout-flex);
+        border-radius: 10px;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-bottom: 1rem;
+      }
+      .container{
+        @apply(--layout-center-center);
+      }
+
+      .flex-wrap3 {
+        @apply(--layout-vertical);
+        @apply(--layout-wrap);
+        background-color: #F1f1f1;
+      }
+
+      .display2{
+        @apply(--paper-font-display2);
+        opacity: var(--dark-primary-opacity);
+        text-align: center;
+      }
+
+      .flex-wrap2 {
+        @apply(--layout-vertical);
+        @apply(--layout-center-aligned);
+        width: 100%;
+      }
+      .flex-wrap {
+        @apply(--layout-horizontal);
+        @apply(--layout-flex-none);
+      }
+      .flex-wrap-reverse {
+          @apply(--layout-horizontal-reverse);
+          @apply(--layout-flex-none);
+      }
+      /*.descript{
         @apply(--paper-font-common-base);
         opacity: var(--dark-secondary-opacity);
         font-size: 12px;
         font-weight: 500;
         line-height: 20px;
-      }
-      [work] {
-        @apply(--layout-horizontal);
-        /*@apply(--layout-center);*/
-        /*@apply(--layout-center-justified);*/
-        padding: 8px 8px;
-        /*background-color:yellow;*/
-      }
-      [how] {
-        @apply(--layout-vertical);
-        @apply(--layout-flex);
-        /*@apply(--layout-center);*/
-        @apply(--layout-center-justified);
-        /*padding: 50px 1px;*/
-        /*flex-basis: 100%;*/
-        /*background-color:yellow;*/
-      }
-      .flex-wrap {
-        @apply(--layout-horizontal);
-        @apply(--layout-flex-none);
-        /*@apply(--layout-wrap);*/
-        /*background-color: yellow;*/
-      }
-      .flex-wrap2 {
-        @apply(--layout-vertical);
-        @apply(--layout-center-aligned);
-        width: 100%;
-        /*background-color: blue;*/
-      }
-      .flex-wrap3 {
-        @apply(--layout-vertical);
-        @apply(--layout-wrap);
-        width: 100%;
-        background-color: #F1f1f1;
-      }
-      .container{
-        @apply(--layout-center-center);
+      }*/
 
+      @media(max-width: 600px) {
+          .card{
+            @apply(--layout-vertical);
+          }
+          .main-container {
+            @apply(--layout-vertical-reverse);
+            @apply(--layout-center);
+            @apply(--layout-center-justified);
+            padding: 8px 24px;
+            background-color:#fdfdfd;
+            flex-basis: none;
+            min-height:130vh;
+          }
+          [work] {
+            @apply(--layout-horizontal);
+            @apply(--layout-flex);
+          }
+          [how] {
+            @apply(--layout-vertical);
+            @apply(--layout-flex);
+            @apply(--layout-center-justified);
+          }
+          .form-card{
+            max-width: 300px;
+            min-width: 115%;
+          }
+          .flex-wrap {
+            @apply(--layout-vertical);
+            @apply(--layout-wrap);
+            width: 100%;
+            background-color: white;
+          }
+          .flex-wrap-reverse {
+            @apply(--layout-vertical);
+            @apply(--layout-wrap);
+            width: 100%;
+            background-color: white;
+          }
+          .flex-wrap2 {
+            @apply(--layout-vertical);
+            @apply(--layout-wrap);
+            width: 100%;
+            background-color: white;
+          }
       }
-      paper-button.custom {
-          --paper-button-ink-color: var(--paper-pink-a200);
-          /* These could also be individually defined for each of the
-            specific css classes, but we'll just do it once as an example */
-          --paper-button-flat-keyboard-focus: {
-            background-color: var(--paper-pink-a200);
-            color: white !important;
-          };
-          --paper-button-raised-keyboard-focus: {
-            background-color: var(--paper-pink-a200) !important;
-            color: white !important;
-          };
-        }
-        paper-button.custom:hover {
-          background-color: var(--paper-indigo-100);
-        }
-        paper-button.indigo {
-          background-color: var(--paper-indigo-500);
-          color: white;
-          --paper-button-raised-keyboard-focus: {
-            background-color: var(--paper-pink-a200) !important;
-            color: white !important;
-          };
-        }
-        a:link {
-            text-decoration: none;
-        }
-
-        a:visited {
-            text-decoration: none;
-        }
-
-        a:hover {
-          text-decoration: none;
-        }
-
-        a:active {
-          text-decoration: none;
-        }
-    @media(max-width: 600px) {
-      [main-title] {
-      @apply(--layout-vertical-reverse);
-      /*flex-basis: 100%;*/
-      background-color:#fdfdfd;
-      position: relative;
-      }
-      .flex-wrap {
-        @apply(--layout-vertical);
-        @apply(--layout-wrap);
-        width: 100%;
-        background-color: white;
-      }
-      .flex-wrap2 {
-        @apply(--layout-vertical);
-        @apply(--layout-wrap);
-        width: 100%;
-        background-color: white;
-      }
-      .flex-wrap3 {
-        @apply(--layout-vertical);
-        @apply(--layout-wrap);
-        width: 100%;
-        background-color: #F1f1f1;
-      }
-      [how] {
-        @apply(--layout-vertical);
-        @apply(--layout-flex);
-        /*@apply(--layout-center);*/
-        @apply(--layout-center-justified);
-        /*padding: 50px 1px;*/
-        /*flex-basis: 100%;*/
-        /*background-color:yellow;*/
-      }
-      [work] {
-        @apply(--layout-horizontal);
-        @apply(--layout-flex);
-        /*@apply(--layout-center);*/
-        /*@apply(--layout-vertical);*/
-        /*padding: 8px 8px;*/
-        /*background-color:yellow;*/
-      }
-      .form-block{
-        position: relative;
-        @apply(--layout-vertical-justified);
-        @apply(--layout-center);
-        /*flex-basis: %;*/
-        /*padding: 1rem;*/
-        /*margin-top: 2rem;*/
-        /*margin-bottom: 2rem;*/
-        /*margin-left: 2rem;
-        margin-right: 2rem;*/
-        box-shadow: 0 0 10px rgba(0,0,0,0.13);
-        min-width: 300px;
-        padding: 0;
-        flex-basis: 100%;
-    }
-    .card{
-      @apply(--layout-flex);
-      @apply(--layout-vertical-reverse);
-      position: relative;
-      max-width: 390px;
-      /*background-color: blue;*/
-      width: 100%;
-      min-width: 220px;
-    }
-    .form-card{
-      @apply(--layout-flex);
-      @apply(--layout-vertical-reverse);
-      position: relative;
-      max-width: 390px;
-      /*background-color: blue;*/
-      flex-basis: 100%;
-      min-width: 220px;
-    }
-    .form-content{
-      @apply(--layout-flex);
-      border-radius: 10px;
-      /*margin-top: -100px*/
-      padding-top:  -32px;
-      /*padding-left: 1rem;*/
-      /*padding-right: 1rem;*/
-      /*padding-bottom: 1rem;*/
-      background-color: white;
-    }
-    .form-head{
-      width: 95%;
-      text-align: center;
-      @apply(--paper-font-common-base);
-      margin-top: -30px;
-      margin-bottom: 1px;
-      padding: 0.01px;
-      -webkit-border-radius: 2px;
-      -moz-border-radius: 2px;
-      -ms-border-radius: 2px;
-      -o-border-radius: 2px;
-      border-radius: 2px;
-      box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
-      background-color: black;
-    }
-  }
     </style>
 
-    <div flex="">
-      <div class="green">
-          <a name="home" href="/home"><paper-button raised="" class="custom indigo">Are you looking for Pro?</paper-button></a>
+    <div class="service">
+      <div>
+          <a name="home" href="/"><paper-button raised="" class="custom indigo">Have a project?</paper-button></a>
       </div>
     </div>
 
     <div class="card">
-      <div main-title="">
-        <div class="form-title">
+      <div class="main-container">
+        <div class="left-container">
           <p class="display3">Join Now</p>
           <p class="subhead">
-          If you are professional, you want more clients.</p>
+            If you are professional, you want more clients.</p>
           <p class="subhead2">
-          Our customers are looking for all specialist. Here some samples:
+            Our customers are looking for all specialist. Here some samples:
           </p>
-          <div>
+          <div flex="">
             <div work="">
               <div how="">
                 <div><img src="/images/iconhandy.png">
                 </div>
-                <div class="descript">Handyman
+                <div class="descript">Handy
                 </div>
               </div>
               <div how="">
@@ -370,55 +288,53 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </div>
             </div>
           </div>
-
-      </div>
+        </div>
         <div class="form-card">
           <div class="form-block">
             <div class="form-head">
               <h3>Get More Customers</h3>
             </div>
             <div class="form-content">
-
               <form is="iron-form" id="redirectDemo">
                 <paper-input id="nameInput" name="name" label="Name" type="text" required=""></paper-input>
-                <paper-input id="zipInput" name="zip" label="Zip Code " type="number" required=""></paper-input>
+                <paper-input id="zipInput" name="zip" label="Zip Code" type="number" required=""></paper-input>
                 <paper-input id="phoneInput" name="phone" label="Phone Nuber {temp password}" type="number" required=""></paper-input>
                 <paper-input id="emailInput" name="email" label="Email Address" type="text" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required=""></paper-input>
                 <paper-button raised="" on-tap="register" disabled$="{{app.isSignedIn}}">Submit</paper-button>
               </form>
             </div>
           </div>
-
         </div>
+      </div>
+    </div>
 
-      </div>
-      </div>
-      <div class="container flex-wrap3" align="center">
-        <p class="display2" align="center">Show yourself to the world.</p>
-        <p class="subhead" align="center">Our platform connects you with new clients.</p>
-      </div>
-      <div class="container flex-wrap2">
-          <p class="display2" align="center">How it works?</p>
-          <div class="container flex-wrap">
-            <div class="subhead" align="center"><img src="/images/3d-man-talk.jpg">
-            </div>
-            <div class="subhead" align="center">Customer tell us about his project.
-            </div>
+    <div class="container flex-wrap3" align="center">
+      <p class="display2" align="center">Show yourself to the world.</p>
+      <p class="subhead" align="center">Our platform connects you with new clients.</p>
+    </div>
+
+    <div class="container flex-wrap2">
+        <p class="display2" align="center">How it works?</p>
+        <div class="container flex-wrap">
+          <div class="subhead" align="center"><img src="/images/3d-man-talk.jpg">
           </div>
-          <div class="container flex-wrap">
-            <div class="subhead" align="center"><img src="/images/3d-man-deal.jpg">
-            </div>
-            <div class="subhead" align="center">We present your service. And the customer decides.
-            </div>
+          <div class="subhead" align="center">Customer tell us about his project.
           </div>
-          <div class="container flex-wrap">
-            <div class="subhead" align="center"><img src="/images/3d-man-hired.jpg">
-            </div>
-            <div> <p class="display2" align="center">You hired!</p>
-              <p class="subhead" align="center">After you confirm the job, you pay a small fee for the introduction.</p>
-            </div>
+        </div>
+        <div class="container flex-wrap-reverse">
+          <div class="subhead" align="center"><img src="/images/3d-man-deal.jpg">
           </div>
-      </div>
+          <div class="subhead" align="center">We present your service. And the customer decides.
+          </div>
+        </div>
+        <div class="container flex-wrap">
+          <div class="subhead" align="center"><img src="/images/3d-man-hired.jpg">
+          </div>
+          <div> <p class="display2" align="center">You hired!</p>
+            <p class="subhead" align="center">After you confirm the job, you pay a small fee for the introduction.</p>
+          </div>
+        </div>
+    </div>
   </template>
 
   <script>

@@ -23,6 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="app-storage.html">
+<link rel="import" href="my-footer.html">
 
 <link rel="import" href="my-icons.html">
 <!-- App firebase connection -->
@@ -166,6 +167,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <my-login name="login"></my-login>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
+        <my-footer>criar rodape2</my-footer>
       </app-header-layout>
     </app-drawer-layout>
   </template>
@@ -237,19 +239,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _updateInfo: function(e) {
-        this.set('userInfo', e.detail);
+        // this.set('userInfo', e.detail);
         //Create a firebase user
         this.$.auth.onButtonTap(e.detail);
         //redirect to /profile path. However it is redirect before firebase return user
         this.set('route.path', '/profile');
-        // this.$.auth.onButtonTap(e.detail)
-        //            .then(
-        //              function() {
-        //                this.set('route.path', '/profile');
-        //              },
-        //              function(error) {
-        //                console.log(error);
-        //              }.bind(this));
+          // this.$.auth.onButtonTap(e.detail).then(function() {
+          //   this.set('route.path', '/profile');
+          // }).catch(function(error) {
+          //   console.log(error);;
+          // });
 
       },
 
