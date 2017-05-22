@@ -36,16 +36,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         switch (data.button) {
           case 'registerPro':
-            // return new Promise(function(resolve, reject) {
-            //   this.$.auth.createUserWithEmailAndPasswordPro(data).then(function(response) {
-            //     console.log(resolve(response));
-            //     // resolve(response);
-            //   }).catch(function(error) {
-            //     // reject(error);
-            //   });
-            // }.bind(this));
+
             this.$.auth.createUserWithEmailAndPasswordPro(data);
 
+          break;
+
+          case 'signInWithEmailNext':
+            this.$.auth.signInWithEmailAndPassword(data.email, data.password);
           break;
 
           case 'signOut':

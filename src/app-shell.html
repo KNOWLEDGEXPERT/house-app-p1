@@ -39,7 +39,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         display: block;
       }
-
+      a:link {
+          text-decoration: none;
+      }
+      a:visited {
+          text-decoration: none;
+      }
+      a:hover {
+        text-decoration: none;
+      }
+      a:active {
+        text-decoration: none;
+      }
       app-header {
         /*color: #fff;*/
         background-color: var(--app-primary-color);
@@ -134,7 +145,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="home" href="/home">Home</a>
           <a name="pro" href="/pro">Pro</a>
-          <a name="view3" href="/login">Log In</a>
+          <a name="login" href="/login">Log In</a>
           <div class="Navigation-link" hidden$="{{!app.isSignedIn}}" on-tap="_onSignOutTap">
 
             <iron-icon class="Navigation-icon" icon="drawer:sign-out"></iron-icon>
@@ -151,8 +162,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             <div class="logo-menu" style="margin:0 auto"><img src="/images/logoicon.png">
             <h class="text-menu"><img src="/images/nameicon.jpg"></h></div>
-            <paper-icon-button icon="my-icons:person" drawer-toggle></paper-icon-button>
-            <h class="text-menu2">Log in</h>
+            <a href="/login">
+              <paper-icon-button icon="my-icons:person"></paper-icon-button>
+              <h class="text-menu2">Log in</h>
+            </a>
+
           </app-toolbar>
         </app-header>
 
@@ -181,7 +195,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Object,
           value:{
             isSignedIn: false
-          }
+          },
+          notify: true
         },
         page: {
           type: String,
@@ -243,7 +258,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         //Create a firebase user
         this.$.auth.onButtonTap(e.detail);
         //redirect to /profile path. However it is redirect before firebase return user
-        this.set('route.path', '/profile');
+        // if (this.userProfile) {
+          this.debounce('observeSignedIn', function() {
+            this.set('route.path', '/profile');
+          });
+        // }
+
+
           // this.$.auth.onButtonTap(e.detail).then(function() {
           //   this.set('route.path', '/profile');
           // }).catch(function(error) {

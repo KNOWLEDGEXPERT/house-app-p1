@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-query.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 
@@ -32,39 +33,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       path="/users/[[user.uid]]/profileExtend"
       data="{{profileExtend}}">
     </firebase-query>
+    <firebase-document
+      id='documentProfile'
+      data='{{profileExtendEdit}}'>
+    </firebase-document>
+    <firebase-query
+      id="queryCategory"
+      path="/category"
+      data="{{categoryData}}">
+    </firebase-query>
     <div class="card">
-      <div class="circle">R</div>
-      <h1>Register</h1>
+      <div class="circle">P</div>
+      <h1>profile</h1>
 
 
-      <p>uid: [[app.userProfile.uid]]</p>
       <p>name: [[app.userProfile.displayName]]</p>
       <p>email: [[app.userProfile.email]]</p>
-      <p>emailVerified: [[app.userProfile.emailVerified]]</p>
-      <p>identifierNumber: [[app.userProfile.identifierNumber]]</p>
       <p>photoURL: [[app.userProfile.photoURL]]</p>
+      <!-- <p>emailVerified: [[app.userProfile.emailVerified]]</p> -->
+      <!-- TODO email vefication -->
+      <!-- <p>identifierNumber: [[app.userProfile.identifierNumber]]</p> -->
+      <!-- <p>uid: [[app.userProfile.uid]]</p> -->
+
+      <paper-input id="phoneInput" label="Phone Nuber" value$="[[arrayItem(profileExtend.*, 0, 'phone')]]" type="number" required autoValidate></paper-input>
+      <paper-input id="addressFLInput" label="Number Street" value$="[[arrayItem(profileExtend.*, 0, 'addressfl')]]" type="text" required autoValidate></paper-input>
+      <paper-input id="addressSLInput" label="Apt/Suit" value$="[[arrayItem(profileExtend.*, 0, 'addresssl')]]" type="text" required autoValidate></paper-input>
+      <paper-input id="cityInput" label="City" value$="[[arrayItem(profileExtend.*, 0, 'city')]]" type="text" required autoValidate></paper-input>
+      <paper-input id="stateInput" label="State" value$="[[arrayItem(profileExtend.*, 0, 'state')]]" type="text" required autoValidate></paper-input>
+      <paper-input id="zipInput" label="Zip Code" type="number" value$="[[arrayItem(profileExtend.*, 0, 'zip')]]" required autoValidate></paper-input>
 
 
-      <template is="dom-repeat" items="[[profileExtend]]" as="profile">
-        <p>zip: [[profile.zip]]</p>
-        <p>phone: [[profile.phone]]</p>
+      <template is="dom-repeat" items="[[categoryData]]" as="{{category}}">
+        <p>[[category.$key]]</p>
       </template>
-      <p>key: [[profileExtend.key]]</p>
-
-      <template is="dom-repeat" items="[[profileExtend]]" as="profile">
-        <paper-input id="zipInput" name="zip" label="Zip Code" type="number" value$="[[profile.zip]]" required></paper-input>
-        <paper-input id="phoneInput" name="phone" label="Phone Nuber {temp password}" value$="[[profile.zip]]" type="number" required></paper-input>
-        <!-- <p>zip: </p>
-        <p>phone: </p> -->
-      </template>
-
 
 
       <paper-button raised on-tap="save" disabled$="{{!app.isSignedIn}}">save</paper-button>
-
-
-      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
-
 
     </div>
   </template>
@@ -74,27 +78,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'my-profile',
       properties:{
           app: {
-            type: Object,
-            reflectToAttribute: true
+            type: Object
           },
-          profileExtend: {
+          // profileExtend: {
+          //   type: Object
+          // },
+          profileExtendEdit: {
             type: Object
           }
-
-      },
-      ready: function(){
-        // console.log(this.user.uid);
       },
 
       save: function(){
 
-        this.$.query.ref.push({
-          zip: data.zip,
-          phone: data.phone
-        });
+        this.set('profileExtendEdit.phone', this.$.phoneInput.value);
+        this.set('profileExtendEdit.zip', this.$.zipInput.value);
+        this.set('profileExtendEdit.addressfl', this.$.addressFLInput.value);
+        this.set('profileExtendEdit.addresssl', this.$.addressSLInput.value);
+        this.set('profileExtendEdit.city', this.$.cityInput.value);
+        this.set('profileExtendEdit.state', this.$.stateInput.value);
+        // // this.set('profileExtendEdit.zip', '7');
+        // this.set('profileExtendEdit.phone', '8');
+        if (this.profileExtend.length>0){
+          this.$.documentProfile.saveValue(this.profileExtendPath, this.profileExtend[0].$key);
+        } else {
+          this.$.documentProfile.saveValue(this.profileExtendPath);
+        }
 
-      }
 
+      },
+      get profileExtendPath() {
+        return '/users/' + this.user.uid + '/profileExtend' ;
+      },
+      arrayItem: function(change, index, path) {
+        // this.get(path, root) returns a value for a path
+        // relative to a root object.
+        return this.get(path, change.base[index]);
+      },
     });
   </script>
 </dom-module>

@@ -36,12 +36,14 @@
 
         signedIn: {
           type: Boolean,
-          observer: '_observeSignedIn'
+          observer: '_observeSignedIn',
+          notify: true
         },
 
         user: {
           type: Boolean,
-          observer: '_observeUser'
+          observer: '_observeUser',
+          notify: true
         }
       },
 
@@ -49,14 +51,14 @@
       _observeSignedIn: function() {
         this.debounce('observeSignedIn', function() {
           this.set('app.isSignedIn', this.signedIn);
-        }, 300);
+        });
       },
 
       // Checking if profile changed
       _observeUser: function() {
         this.debounce('observeUser', function() {
           this.set('app.userProfile', this.user);
-        }, 300);
+        });
       },
 
       _onAuthError: function(event) {
@@ -86,17 +88,18 @@
           return new Promise(function(resolve, reject) {
             this.$.firebaseAuth.createUserWithEmailAndPassword(data.email, data.phone)
                                 .then(function(user) {
-                                    user.updateProfile({
-                                      displayName: data.name
-                                    })
-                                        .then(function() {
-                                            that.$.query.ref.push({
-                                              zip: data.zip,
-                                              phone: data.phone
-                                            });
-                                          }
-                                        );
-                                      },
+                                      user.sendEmailVerification();
+                                      user.updateProfile({
+                                        displayName: data.name
+                                      })
+                                      .then(function() {
+                                          that.$.query.ref.push({
+                                            zip: data.zip,
+                                            phone: data.phone
+                                          });
+                                        }
+                                      );
+                                  },
                                       //Error when tried to create a user
                                       function(error) {
                                         // Handle Errors here.
@@ -117,36 +120,6 @@
             });
           }.bind(this));
 
-        // this.$.firebaseAuth.createUserWithEmailAndPassword(data.email, data.phone)
-        //                     .then(function(user) {
-        //                         user.updateProfile({
-        //                           displayName: data.name
-        //                         })
-        //                             .then(function() {
-        //                                     // Update successful.
-        //                                   },
-        //                                   function(error) {
-        //                                     // An error happened.
-        //                                     console.log('updateProfile.displayName error');
-        //                                     console.error(error);
-        //                                   }
-        //                             );
-        //                           },
-        //                           //Error when tried to create a user
-        //                           function(error) {
-        //                             // Handle Errors here.
-        //                             var errorCode = error.code;
-        //                             var errorMessage = error.message;
-        //                             // [START_EXCLUDE]
-        //                             if (errorCode == 'auth/weak-password') {
-        //                               alert('The password is too weak.');
-        //                             } else {
-        //                               console.error(error);
-        //                             }
-        //                             // [END_EXCLUDE]
-        //                     });
-        //
-        // console.log(this.$.firebaseAuth.user);
       },
 
       createUserWithEmailAndPassword: function(email, password) {
@@ -159,6 +132,22 @@
         this.$.firebaseAuth.createUserWithEmailAndPassword(email, password);
 
         console.log(this.$.firebaseAuth.user);
+      },
+
+      // Sign in a user with an email address and password
+      signInWithEmailAndPassword: function(email, password) {
+        var that = this;
+
+        this.$.firebaseAuth.signInWithEmailAndPassword(email, password).then(function(user){
+            if (user) {
+              that.set('route.path', '/profile');
+            }
+          }).catch(function(error) {
+            console.log(error);
+          });
+        this._log('Auth Demo: Sign in a user with email address:',
+                  email, 'and password:', password);
+
       },
 
       signOut: function() {

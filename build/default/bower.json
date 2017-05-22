@@ -19,7 +19,8 @@
     "paper-input": "PolymerElements/paper-input#^1.1.23",
     "paper-button": "PolymerElements/paper-button#^1.0.14",
     "polymerfire": "firebase/polymerfire#^0.11.2",
-    "paper-search": "Collaborne/paper-search#^1.2.3"
+    "paper-search": "Collaborne/paper-search#^1.2.3",
+    "gold-password-input": "GeoloeG/gold-password-input#^1.1.6"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

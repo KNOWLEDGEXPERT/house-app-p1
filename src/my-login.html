@@ -9,7 +9,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/gold-password-input/gold-password-input.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="shared-styles.html">
+
 
 <dom-module id="my-login">
   <template>
@@ -22,16 +27,72 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <div class="card">
-      <div class="circle">3</div>
-      <h1>Sign</h1>
-      <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
-      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
+      <div class="Page-container Page-container--center Page-container--fullHeight">
+        <paper-material class="Page-card Page-card--small" elevation="2">
+          <paper-input class="Input" id="emailInput"
+                       name="email" type="text" autocomplete="username"
+                       auto-validate required
+                       value="{{app.userAuthEmail}}"
+                       pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                       label="email"
+                       error-message="invalid email"
+                       on-keydown="_onEmailInputKeyDown"></paper-input>
+          <gold-password-input class="Input" id="passwordInput"
+                     name="password" autocomplete="new-password"
+                     required reveal minlength="6"
+                     label="input password"
+                     error-message="password must contain 6 characters"
+                     on-keydown="_onPasswordInputKeyDown"></gold-password-input>
+          <div class="Button-touchTarget" on-tap="_onNextButtonTap">
+            <paper-button class="Button Button--shadowText" raised>Next</paper-button>
+          </div>
+        </paper-material>
+      </div>
     </div>
   </template>
 
   <script>
     Polymer({
       is: 'my-login',
+      app: Object,
+
+      _onNextButtonTap: function() {
+        if (!this.$.emailInput.validate()) {
+          this.$.emailInput.focus();
+          return false;
+        }
+
+        if (!this.$.passwordInput.validate()) {
+          this.$.passwordInput.focus();
+          return false;
+        }
+
+        this.fire('app-auth-button-tap', {
+          button: 'signInWithEmailNext',
+          email: this.$.emailInput.value,
+          password: this.$.passwordInput.value
+        });
+      },
+
+      _onEmailInputKeyDown: function(event) {
+        if (!this.$.emailInput.validate()) {
+          return false;
+        }
+
+        if (event.which === 13 || event.key === 'Enter') {
+          this._onNextButtonTap();
+        }
+      },
+
+      _onPasswordInputKeyDown: function(event) {
+        if (!this.$.passwordInput.validate()) {
+          return false;
+        }
+
+        if (event.which === 13 || event.key === 'Enter') {
+          this._onNextButtonTap();
+        }
+      }
     });
   </script>
 </dom-module>
