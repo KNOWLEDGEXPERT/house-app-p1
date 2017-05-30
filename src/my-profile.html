@@ -14,6 +14,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymerfire/firebase-document.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
 
 <link rel="import" href="shared-styles.html">
 
@@ -33,41 +35,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       path="/users/[[user.uid]]/profileExtend"
       data="{{profileExtend}}">
     </firebase-query>
+
     <firebase-document
       id='documentProfile'
       data='{{profileExtendEdit}}'>
     </firebase-document>
+
     <firebase-query
       id="queryCategory"
       path="/category"
       data="{{categoryData}}">
     </firebase-query>
+
     <div class="card">
       <div class="circle">P</div>
       <h1>profile</h1>
 
-
-      <p>name: [[app.userProfile.displayName]]</p>
-      <p>email: [[app.userProfile.email]]</p>
-      <p>photoURL: [[app.userProfile.photoURL]]</p>
-      <!-- <p>emailVerified: [[app.userProfile.emailVerified]]</p> -->
-      <!-- TODO email vefication -->
-      <!-- <p>identifierNumber: [[app.userProfile.identifierNumber]]</p> -->
-      <!-- <p>uid: [[app.userProfile.uid]]</p> -->
-
-      <paper-input id="phoneInput" label="Phone Nuber" value$="[[arrayItem(profileExtend.*, 0, 'phone')]]" type="number" required autoValidate></paper-input>
-      <paper-input id="addressFLInput" label="Number Street" value$="[[arrayItem(profileExtend.*, 0, 'addressfl')]]" type="text" required autoValidate></paper-input>
-      <paper-input id="addressSLInput" label="Apt/Suit" value$="[[arrayItem(profileExtend.*, 0, 'addresssl')]]" type="text" required autoValidate></paper-input>
-      <paper-input id="cityInput" label="City" value$="[[arrayItem(profileExtend.*, 0, 'city')]]" type="text" required autoValidate></paper-input>
-      <paper-input id="stateInput" label="State" value$="[[arrayItem(profileExtend.*, 0, 'state')]]" type="text" required autoValidate></paper-input>
-      <paper-input id="zipInput" label="Zip Code" type="number" value$="[[arrayItem(profileExtend.*, 0, 'zip')]]" required autoValidate></paper-input>
-
-
-      <template is="dom-repeat" items="[[categoryData]]" as="{{category}}">
-        <p>[[category.$key]]</p>
-      </template>
-
-
+      <div class="card">
+        <p>Name: [[app.userProfile.displayName]]</p>
+        <p>Email: [[app.userProfile.email]]</p>
+        <!-- <p>photoURL: [[app.userProfile.photoURL]]</p> -->
+        <!-- <p>emailVerified: [[app.userProfile.emailVerified]]</p> -->
+        <!-- TODO email vefication -->
+        <!-- <p>identifierNumber: [[1.userProfile.identifierNumber]]</p> -->
+        <!-- <p>uid: [[app.userProfile.uid]]</p> -->
+      </div>
+      <p></p>
+      <div class="card">
+        <paper-input id="bussinesNameInput" label="Bussines Name" value$="[[arrayItem(profileExtend.*, 0, 'bussinesName')]]" type="text" required autoValidate></paper-input>
+        <paper-input id="phoneInput" label="Phone Nuber" value$="[[arrayItem(profileExtend.*, 0, 'phone')]]" type="number" required autoValidate></paper-input>
+        <paper-input id="addressFLInput" label="Number Street" value$="[[arrayItem(profileExtend.*, 0, 'addressfl')]]" type="text" required autoValidate></paper-input>
+        <paper-input id="addressSLInput" label="Apt/Suit" value$="[[arrayItem(profileExtend.*, 0, 'addresssl')]]" type="text" required autoValidate></paper-input>
+        <paper-input id="cityInput" label="City" value$="[[arrayItem(profileExtend.*, 0, 'city')]]" type="text" required autoValidate></paper-input>
+        <paper-input id="stateInput" label="State" value$="[[arrayItem(profileExtend.*, 0, 'state')]]" type="text" required autoValidate></paper-input>
+        <paper-input id="zipInput" label="Zip Code" type="number" value$="[[arrayItem(profileExtend.*, 0, 'zip')]]" required autoValidate></paper-input>
+      </div>
+      <p></p>
+      <div class="card">
+        <span>Select your speciality:</span>
+        <paper-listbox selected-values={{mySelection}} attr-for-selected="value" multi>
+          <template is="dom-repeat" items="{{categoryData}}"  sort="_sort">
+            <paper-item value="[[item.$key]]">[[item.$val]]</paper-item>
+          </template>
+        </paper-listbox>
+      </div>
+      <p></p>
       <paper-button raised on-tap="save" disabled$="{{!app.isSignedIn}}">save</paper-button>
 
     </div>
@@ -80,24 +92,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           app: {
             type: Object
           },
-          // profileExtend: {
-          //   type: Object
-          // },
           profileExtendEdit: {
             type: Object
-          }
+          },
+          profileExtend:{
+            type: Array,
+          },
+          mySelection:{
+           type: Array,
+           notify: true,
+           computed: 'computeExtended(profileExtend.*)'
+         }
+      },
+
+      // observers: [
+      //   '_profileExtendChanged(profileExtend)',
+      // ],
+
+      ready: function(){
+        console.log(this.mySelection);
+        console.log(this.categoryData);
+        console.log(this.profileExtend);
       },
 
       save: function(){
-
+        console.log(this.mySelection);
+        // console.log(this.profileExtend[0].$key);
+        // console.log(this.profileExtend[0].category);
         this.set('profileExtendEdit.phone', this.$.phoneInput.value);
         this.set('profileExtendEdit.zip', this.$.zipInput.value);
         this.set('profileExtendEdit.addressfl', this.$.addressFLInput.value);
         this.set('profileExtendEdit.addresssl', this.$.addressSLInput.value);
         this.set('profileExtendEdit.city', this.$.cityInput.value);
         this.set('profileExtendEdit.state', this.$.stateInput.value);
-        // // this.set('profileExtendEdit.zip', '7');
-        // this.set('profileExtendEdit.phone', '8');
+        this.set('profileExtendEdit.bussinesName', this.$.bussinesNameInput.value);
+        this.set('profileExtendEdit.category', this.mySelection);
+
         if (this.profileExtend.length>0){
           this.$.documentProfile.saveValue(this.profileExtendPath, this.profileExtend[0].$key);
         } else {
@@ -109,11 +139,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       get profileExtendPath() {
         return '/users/' + this.user.uid + '/profileExtend' ;
       },
+
       arrayItem: function(change, index, path) {
         // this.get(path, root) returns a value for a path
         // relative to a root object.
         return this.get(path, change.base[index]);
       },
+
+      _sort: function(a, b){
+          var nameA = a.$val.toUpperCase(); // ignore upper and lowercase
+          var nameB = b.$val.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+
+          // names must be equal
+          return 0;
+      },
+
+      computeExtended: function () {
+        return this.profileExtend[0] ? this.profileExtend[0].category : null;
+      }
     });
   </script>
 </dom-module>

@@ -1,0 +1,131 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-query.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+
+<dom-module id="my-profile">
+  <template>
+    <style>
+       :host {
+        display: block;
+        padding: 10px;
+      }
+    </style>
+    <firebase-auth user="{{user}}"></firebase-auth>
+
+    <firebase-query id="query" path="/users/[[user.uid]]/profileExtend" data="{{profileExtend}}">
+    </firebase-query>
+
+    <firebase-document id="documentProfile" data="[[profileExtendEdit]]">
+    </firebase-document>
+
+    <firebase-query id="queryCategory" path="/category" data="{{categoryData}}">
+    </firebase-query>
+
+    <div class="card">
+      <div class="circle">P</div>
+      <h1>profile</h1>
+
+      <div class="card">
+        <p>name: [[app.userProfile.displayName]]</p>
+        <p>email: [[app.userProfile.email]]</p>
+        <p>photoURL: [[app.userProfile.photoURL]]</p>
+        <!-- <p>emailVerified: [[app.userProfile.emailVerified]]</p> -->
+        <!-- TODO email vefication -->
+        <!-- <p>identifierNumber: [[1.userProfile.identifierNumber]]</p> -->
+        <!-- <p>uid: [[app.userProfile.uid]]</p> -->
+      </div>
+      <p></p>
+      <div class="card">
+        <paper-input id="phoneInput" label="Phone Nuber" value="{{profileExtendEdit.phone}}" type="number" required auto-validate></paper-input>
+        <paper-input id="addressFLInput" label="Number Street" value="{{profileExtendEdit.addressfl}}" type="text" required auto-validate></paper-input>
+        <paper-input id="addressSLInput" label="Apt/Suit" value="{{profileExtendEdit.addresssl}}" type="text" required auto-validate></paper-input>
+        <paper-input id="cityInput" label="City" value="{{profileExtendEdit.city}}" type="text" required auto-validate></paper-input>
+        <paper-input id="stateInput" label="State" value="{{profileExtendEdit.state}}" type="text" required auto-validate></paper-input>
+        <paper-input id="zipInput" label="Zip Code" type="number" value="{{profileExtendEdit.zip}}" required auto-validate></paper-input>
+      </div>
+      <p></p>
+      <div class="card">
+        <span>Select your speciality:</span>
+        <paper-listbox selected-values={{profileExtendEdit.category}} attr-for-selected="value" multi>
+          <template is="dom-repeat" items="[[categoryData]]" sort="_sort">
+            <paper-item value="[[item.$key]]">[[item.$val]]</paper-item>
+          </template>
+        </paper-listbox>
+      </div>
+      <p></p>
+      <paper-button raised on-tap="save" disabled$="[[!app.isSignedIn]]">save</paper-button>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'my-profile',
+      properties: {
+        app: {
+          type: Object
+        },
+        user: {
+          type: Object
+        },
+        profileExtend: {
+          type: Array
+        },
+        profileExtendEdit: {
+          type: Object,
+          reflectToAttribute: true
+        }
+      },
+      observers: [
+        '_profileExtendChanged(profileExtend.*)'
+      ],
+      save: function() {
+        console.log(this.mySelection);
+        console.log(this.profileExtend[0].$key);
+        console.log(this.profileExtend[0].category);
+        if (this.profileExtend.length > 0) {
+          this.$.documentProfile.saveValue(this.profileExtendPath, this.profileExtend[0].$key);
+        } else {
+          this.$.documentProfile.saveValue(this.profileExtendPath);
+        }
+      },
+
+      get profileExtendPath() {
+        return '/users/' + this.user.uid + '/profileExtend';
+      },
+
+      _profileExtendChanged: function(profileExtend) {
+        // Make a copy!
+        this.profileExtendEdit = profileExtend && profileExtend.length ? Object.assign({}, profileExtend[0]) : {};
+      },
+
+      _sort: function(a, b) {
+        var nameA = a.$val.toUpperCase(); // ignore upper and lowercase
+        var nameB = b.$val.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+
+        // names must be equal
+        return 0;
+      }
+    });
+  </script>
+</dom-module>
