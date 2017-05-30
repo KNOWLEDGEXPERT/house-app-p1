@@ -149,14 +149,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div>
             <a name="pro" href="/pro">Pro</a>
           </div>
+          <div hidden$="{{!app.isSignedIn}}">
+            <a name="profile" href="/profile">Profile</a>
+          </div>
           <div hidden$="{{app.isSignedIn}}">
             <a name="login" href="/login">Log In</a>
           </div>
           <div hidden$="{{!app.isSignedIn}}" on-tap="_onSignOutTap">
             <!-- <iron-icon class="Navigation-icon" icon="drawer:sign-out"></iron-icon> -->
             <a name="pro" href="/">Sign out</a>
-
-
           </div>
         </iron-selector>
       </app-drawer>
