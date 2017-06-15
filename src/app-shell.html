@@ -22,12 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-styles/color.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
-<link rel="import" href="app-storage.html">
-<link rel="import" href="my-footer.html">
 
-<link rel="import" href="my-icons.html">
-<!-- App firebase connection -->
-<link rel="import" href="ha-auth/ha-auth.html">
 
 
 <dom-module id="app-shell">
@@ -134,6 +129,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!-- Use to storage status connection user -->
     <app-storage app="{{app}}"></app-storage>
 
+    <my-shop-cart-data
+        id="cart"
+        cart="{{cart}}"
+        num-items="{{numItems}}"
+        total="{{total}}"></my-shop-cart-data>
 
     <!-- firebase connection -->
     <ha-auth id="auth" app="{{app}}" route="{{route}}"></ha-auth>
@@ -183,13 +183,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <my-home name="home"></my-home>
-          <my-pro name="pro" app="{{app}}" route="{{route}}" user-info="[[userInfo]]"></my-pro>
-          <my-profile name="profile" app="{{app}}"  route="{{route}}" user-info="[[userInfo]]" ></my-profile>
-          <my-login name="login"></my-login>
+          <my-home    name="home"     app="{{app}}" route="{{route}}"></my-home>
+          <my-pro     name="pro"      app="{{app}}" route="{{route}}" user-info="[[userInfo]]"></my-pro>
+          <my-profile name="profile"  app="{{app}}" route="{{route}}" user-info="[[userInfo]]" ></my-profile>
+          <my-login   name="login"    app="{{app}}" route="{{route}}"></my-login>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
-        <my-footer>criar rodape2</my-footer>
+        <my-footer></my-footer>
       </app-header-layout>
     </app-drawer-layout>
   </template>
@@ -202,7 +202,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app:{
           type: Object,
           value:{
-            isSignedIn: false
+            isSignedIn: false,
+            userSearchType: ""
           },
           notify: true
         },
@@ -216,6 +217,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       listeners: {
         'app-auth-button-tap': '_onAppAuthButtonTap',
         'info-updated':'_updateInfo',
+        'add-cart-item': '_onAddCartItem',
         'notify': '_onNotify'//TODO
       },
 
@@ -247,10 +249,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _pageChanged: function(page) {
         // Load page import on demand. Show 404 page if fails
         var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
-        this.importHref(resolvedPageUrl, null, this._showPage404, true);
+        var cb = this._ensureLazyLoaded;
+
+        this.importHref(resolvedPageUrl, cb, this._showPage404, true);
         // console.log('Route Path: ' + this.route.path);
         // console.log('Data: ' + this.routeData);
         // console.log('Page: ' + this.routeData.page);
+      },
+
+      _ensureLazyLoaded: function() {
+        // load lazy resources after render and set `loadComplete` when done.
+        if (!this.loadComplete) {
+          Polymer.RenderStatus.afterNextRender(this, function() {
+            this.importHref(this.resolveUrl('lazy-resources.html'), function() {
+              // Register service worker if supported.
+              // if ('serviceWorker' in navigator) {
+              //   navigator.serviceWorker.register('/service-worker.js');
+              // }
+              // this._notifyNetworkStatus();
+              this.loadComplete = true;
+            });
+          });
+        }
       },
 
       _showPage404: function() {
@@ -286,7 +306,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.fire('app-auth-button-tap', {
           button: 'signOut'
         });
-      }
+      },
+      _onAddCartItem: function(event) {
+        // if (!this._cartModal) {
+        //   this._cartModal = document.createElement('shop-cart-modal');
+        //   Polymer.dom(this.root).appendChild(this._cartModal);
+        // }
+        this.$.cart.addItem(event.detail);
+        // this._cartModal.open();
+        // this._announce('Item added to the cart');
+      },
 
     });
   </script>

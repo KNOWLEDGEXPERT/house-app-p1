@@ -21,41 +21,102 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="shared-styles">
       :host {
         display: block;
-
         padding: 10px;
+      }
+      .card{
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--layout-center-justified);
+      }
+      .log-in__title {
+        color: #333D59;
+        text-transform: capitalize;
+        font-size: 1.6em;
+        font-weight: 300;
+        padding: 60px 0;
+        padding-bottom: 45px;
       }
     </style>
 
     <div class="card">
-      <div class="Page-container Page-container--center Page-container--fullHeight">
-        <paper-material class="Page-card Page-card--small" elevation="2">
-          <paper-input class="Input" id="emailInput"
-                       name="email" type="text" autocomplete="username"
-                       auto-validate required
+      <!-- <div class="log-in__card"> -->
+      <paper-material class="log-in__card" elevation="3" animated>
+        <div class="log-in__title">Sign up for housejoin</div>
+        <paper-input
+                     id="emailInput"
+                     name="email"
+                     type="text"
+                     autocomplete="username"
+                     value="{{app.userAuthEmail}}"
+                     pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                     label="email"
+                     error-message="invalid email"
+                     on-keydown="_onEmailInputKeyDown"
+                     required
+                     auto-validate></paper-input>
+        <gold-password-input  id="passwordInput"
+                   name="password" autocomplete="new-password"
+                   required reveal minlength="6"
+                   label="input password"
+                   error-message="password must contain 6 characters"
+                   on-keydown="_onPasswordInputKeyDown"></gold-password-input>
+       <gold-password-input  id="passwordInput"
+                  name="password" autocomplete="new-password"
+                  required reveal minlength="6"
+                  label="repeat password"
+                  error-message="password must contain 6 characters"
+                  on-keydown="_onPasswordInputKeyDown"></gold-password-input>
+        <div class="checkboxy">
+              <input name="cecky" id="checky" value="1" type="checkbox" /><label class="terms">I accept the terms of use</label>
+        </div>
+        <div class="Button-touchTarget" >
+          <paper-button class="" on-tap="register" raised>Next</paper-button>
+        </div>
+      </paper-material>
+        <paper-material class="log-in__card" elevation="3" animated>
+          <div class="log-in__title">Log into your account</div>
+          <paper-input
+                       id="emailInput"
+                       name="email"
+                       type="text"
+                       autocomplete="username"
                        value="{{app.userAuthEmail}}"
                        pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
                        label="email"
                        error-message="invalid email"
-                       on-keydown="_onEmailInputKeyDown"></paper-input>
-          <gold-password-input class="Input" id="passwordInput"
+                       on-keydown="_onEmailInputKeyDown"
+                       required
+                       auto-validate></paper-input>
+          <gold-password-input  id="passwordInput"
                      name="password" autocomplete="new-password"
                      required reveal minlength="6"
                      label="input password"
                      error-message="password must contain 6 characters"
                      on-keydown="_onPasswordInputKeyDown"></gold-password-input>
-          <div class="Button-touchTarget" on-tap="_onNextButtonTap">
-            <paper-button class="Button Button--shadowText" raised>Next</paper-button>
+          <div class="Button-touchTarget" >
+            <paper-button class="Button Button--shadowText" on-tap="_onNextButtonTap" raised>Next</paper-button>
           </div>
         </paper-material>
-      </div>
+
+      <!-- </div> -->
     </div>
   </template>
 
   <script>
     Polymer({
       is: 'my-login',
-      app: Object,
+      properties: {
+        app: {
+          type: Object,
+          notify: true
+        }
+      },
+      ready: function(){
+        if (this.app.userSearchType) {
+          console.log(this.app.userSearchType);
 
+        }
+      },
       _onNextButtonTap: function() {
         if (!this.$.emailInput.validate()) {
           this.$.emailInput.focus();
@@ -72,6 +133,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           email: this.$.emailInput.value,
           password: this.$.passwordInput.value
         });
+      },
+
+      register: function() {
+
+        this.fire('info-updated',
+                  {
+                    button: 'register',
+                    name: this.$.nameInput.value,
+                    zip: this.$.zipInput.value,
+                    phone: this.$.phoneInput.value,
+                    email: this.$.emailInput.value,
+                    userType:'1'
+                  }
+        );
       },
 
       _onEmailInputKeyDown: function(event) {

@@ -397,36 +397,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </div>
     <div>
-      <h1>We connect you with the best professionals. It's free.</h1>
       <p>Search what do you need or choose one category:</p>
-    <p class="subhead"><paper-search-bar></p>
+      <p class="subhead"><paper-search-bar></p>
       <div>
         <div work>
-          <div how>
+          <div how id="handyman" on-tap="searchPro">
             <div align="center"><img src="/images/iconhandy.png">
             </div>
             <div class="descript">Handyman
             </div>
           </div>
-          <div how>
+          <div how id="cleaner" on-tap="searchPro">
             <div align="center"><img src="/images/iconclean.png">
             </div>
             <div class="descript">Cleaner
             </div>
           </div>
-          <div how>
+          <div how id="painter" on-tap="searchPro">
             <div align="center"><img src="/images/iconpainter.png">
             </div>
             <div class="descript">Painter
             </div>
           </div>
-          <div how>
+          <div how id="landscape" on-tap="searchPro">
             <div align="center"><img src="/images/iconland.png">
             </div>
             <div class="descript">Landscape
             </div>
           </div>
-          <div how>
+          <div how id="other" on-tap="searchPro">
             <div align="center"><img src="/images/iconother.png">
             </div>
             <div class="descript">Other
@@ -434,6 +433,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
         </div>
       </div>
+      <h1>We connect you with the best professionals. It's free.</h1>
     </div>
     <div class="container flex-wrap3" align="center">
       <p class="display2" align="center">New construction, improvement, maintain?</p>
@@ -467,6 +467,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     Polymer({
       is: 'my-home',
+      properties: {
+        app: {
+          type: Object,
+          notify: true
+        }
+      },
+      searchPro: function(e){
+
+        // This event will be handled by shop-app.
+        this.fire('add-cart-item', {
+          item: e.currentTarget.id,
+          quantity: 1,
+          size: "m"
+        });
+
+        if (!this.app.isSignedIn) {
+
+          this.set('route.path', '/login');
+        }
+      }
     });
   </script>
 </dom-module>
