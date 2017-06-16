@@ -13,23 +13,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="ha-auth">
   <template>
-    <ha-auth-firebase id="auth" app="{{app}}" route="{{route}}"></ha-auth-firebase>
+    <ha-auth-firebase id="auth" app="{{app}}" cart="[[cart]]" route="{{route}}"></ha-auth-firebase>
   </template>
 
   <script>
     Polymer({
       is: 'ha-auth',
-
-      properties: {
-        // route: {
-        //   type: Object,
-        //   notify: true
-        // }
-      },
-      ready: function () {
-        // console.log(route);
-
-      },
 
       onButtonTap: function(data) {
         console.log(data);

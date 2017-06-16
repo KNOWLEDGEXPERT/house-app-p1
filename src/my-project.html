@@ -16,10 +16,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
+
 
 <link rel="import" href="shared-styles.html">
 
-<dom-module id="my-profile">
+<dom-module id="my-project">
   <template>
     <style include="shared-styles">
       :host {
@@ -28,6 +30,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 10px;
       }
     </style>
+    <app-localstorage-document key="shop-cart-data" data="{{cart}}"></app-localstorage-document>
+
     <firebase-auth user="{{user}}"></firebase-auth>
 
     <firebase-query
@@ -49,16 +53,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div class="card">
       <div class="circle">P</div>
-      <h1>profile</h1>
+      <h1>Project</h1>
 
       <div class="card">
-        <p>Name: [[app.userProfile.displayName]]</p>
-        <p>Email: [[app.userProfile.email]]</p>
-        <!-- <p>photoURL: [[app.userProfile.photoURL]]</p> -->
-        <!-- <p>emailVerified: [[app.userProfile.emailVerified]]</p> -->
-        <!-- TODO email vefication -->
-        <!-- <p>identifierNumber: [[1.userProfile.identifierNumber]]</p> -->
-        <!-- <p>uid: [[app.userProfile.uid]]</p> -->
+
       </div>
       <p></p>
       <div class="card">
@@ -87,7 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     Polymer({
-      is: 'my-profile',
+      is: 'my-project',
       properties:{
           app: {
             type: Object
@@ -113,6 +111,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log(this.mySelection);
         console.log(this.categoryData);
         console.log(this.profileExtend);
+        console.log(this.cart);
+
       },
 
       save: function(){

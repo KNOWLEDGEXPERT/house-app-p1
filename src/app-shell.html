@@ -136,7 +136,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         total="{{total}}"></my-shop-cart-data>
 
     <!-- firebase connection -->
-    <ha-auth id="auth" app="{{app}}" route="{{route}}"></ha-auth>
+    <ha-auth id="auth" app="{{app}}" cart="[[cart]]" route="{{route}}"></ha-auth>
 
     <app-drawer-layout fullbleed force-narrow>
       <!-- Drawer content -->
@@ -144,10 +144,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-toolbar></app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <div>
-            <a name="home" href="/home">Home</a>
+            <a name="home" href="/">Home</a>
           </div>
           <div>
             <a name="pro" href="/pro">Pro</a>
+          </div>
+          <div hidden$="{{!app.isSignedIn}}">
+            <a name="profile" href="/project">Project</a>
           </div>
           <div hidden$="{{!app.isSignedIn}}">
             <a name="profile" href="/profile">Profile</a>
@@ -169,7 +172,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <app-toolbar>
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             <div class="logo-menu" style="margin:0 auto"><img src="/images/logoicon.png">
-            <h class="text-menu"><img src="/images/nameicon.jpg"></h></div>
+            <h class="text-menu"><a name="home" href="/"><img src="/images/nameicon.jpg"></a></h></div>
             <a href="/login">
               <paper-icon-button icon="my-icons:person"></paper-icon-button>
               <h class="text-menu2" hidden$="{{app.isSignedIn}}">Log in</h>
@@ -183,10 +186,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <my-home    name="home"     app="{{app}}" route="{{route}}"></my-home>
+          <my-home    name="home"     app="{{app}}" route="{{route}}" cart="{{cart}}"></my-home>
           <my-pro     name="pro"      app="{{app}}" route="{{route}}" user-info="[[userInfo]]"></my-pro>
           <my-profile name="profile"  app="{{app}}" route="{{route}}" user-info="[[userInfo]]" ></my-profile>
-          <my-login   name="login"    app="{{app}}" route="{{route}}"></my-login>
+          <my-project name="project"  app="{{app}}" route="{{route}}" cart="{{cart}}" user-info="[[userInfo]]" ></my-project>
+          <my-login   name="login"    app="{{app}}" route="{{route}}" cart="{{cart}}"></my-login>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
         <my-footer></my-footer>
@@ -212,6 +216,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           reflectToAttribute: true,
           observer: '_pageChanged'
         },
+        cart: {
+          type: Array,
+          value: function() {
+            return [];
+          },
+          notify: true
+        },
       },
 
       listeners: {
@@ -226,6 +237,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       // ready: function() {
+      //   console.log(this.cart);
       // },
 
       _onNotify: function(event) {
@@ -252,9 +264,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var cb = this._ensureLazyLoaded;
 
         this.importHref(resolvedPageUrl, cb, this._showPage404, true);
-        // console.log('Route Path: ' + this.route.path);
-        // console.log('Data: ' + this.routeData);
-        // console.log('Page: ' + this.routeData.page);
       },
 
       _ensureLazyLoaded: function() {

@@ -33,13 +33,14 @@
           type: Object,
           notify: true
         },
-
+        cart: {
+          type: Array
+        },
         signedIn: {
           type: Boolean,
           observer: '_observeSignedIn',
           notify: true
         },
-
         user: {
           type: Boolean,
           observer: '_observeUser',
@@ -77,11 +78,6 @@
       },
 
       createUserWithEmailAndPasswordPro: function(data) {
-
-        console.log(this.user);
-        console.log(this.$.firebaseAuth.signedIn);
-        console.log(this.$.firebaseAuth.statusKnown);
-        console.log(this.$.firebaseAuth.user);
 
         // make this context avarible inside the promise.
         var that = this;
@@ -141,8 +137,8 @@
 
         this.$.firebaseAuth.signInWithEmailAndPassword(email, password).then(function(user){
             if (user) {
-              that.set('route.path', '/profile');
-            }
+              that.set('route.path', '/project');
+            } 
           }).catch(function(error) {
             console.log(error);
           });
